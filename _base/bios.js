@@ -2,6 +2,7 @@
  * EXTEND PROTOTYPE
  */
  
+ try{
  ERRORS_STACK = [];
  
  window.onerror = function(){
@@ -588,4 +589,9 @@ Class.namespace = function(nspace, scope, construct){
 	}
 	
 	return scope;
+}
+	
+}catch(e){
+	alert('error bios');
+	ERRORBIOS = e;
 }
