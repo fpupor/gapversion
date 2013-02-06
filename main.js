@@ -1,3 +1,5 @@
+alert('init run');
+
 var MyApp = new gapVersion({
 	SERVER: 'http://hml.conheca.me/gapversion/',
 	SYSTEM: 'system.php',
