@@ -8,7 +8,12 @@
 	
 	<script>
 		window.onerror = function(e){
-			alert(e.toString());
+			var str = '';
+			
+			for(var i in e)
+				str += (i + ' : ' + e[i] + '\n');
+				
+			alert(str);
 		}
 	</script>
 	<script src="phonegap.js"></script>
@@ -226,7 +231,7 @@
 </head>
 <body>
 	
-	<textarea id="code">
+	<textarea id="code" style="width:100%; height:100%;">
 		teste = new Class({
 			construct: function(c){
 				alert('ok ' + c);
@@ -236,7 +241,7 @@
 		var y = new teste('xxx');
 	</textarea>
 	
-	<input type="button" onclick="_code=document.getElementById('code');eval(_code.value);_code.value='';void(0);" value="execute">execute</input>
+	<input type="button" onclick="(function(){_code=document.getElementById('code');eval(_code.value);_code.value='';})();" value="execute">execute</input>
 	
 </body>
 </html>
