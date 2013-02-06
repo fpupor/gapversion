@@ -2,8 +2,8 @@
  * EXTEND PROTOTYPE
  */
  
- try{
  alert('bios start');
+ try{
  
  ERRORS_STACK = [];
  
