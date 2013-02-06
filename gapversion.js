@@ -63,7 +63,7 @@
 	},
 	
 	checkNetwork: function(){
-		switch(navigator.connection.type){
+		switch(navigator.connection.type || navigator.network.connection.type){
 			case self.NETWORK.ETHERNET:
 			case self.NETWORK.CELL_2G:
 			case self.NETWORK.CELL_3G:
@@ -86,12 +86,12 @@
 	},
 	
 	NETWORK: {
-		UNKNOWN	: 0,
-		ETHERNET: 1,
-		WIFI	: 2,
-		CELL_2G	: 3,
-		CELL_3G	: 4,
-		CELL_4G	: 5,
-		NONE	: undefined
+		UNKNOWN	: Connection.UNKNOWN,
+		ETHERNET: Connection.ETHERNET,
+		WIFI	: Connection.WIFI,
+		CELL_2G	: Connection.CELL_2G,
+		CELL_3G	: Connection.CELL_3G,
+		CELL_4G	: Connection.CELL_4G,
+		NONE	: Connection.NONE
 	}
 });
