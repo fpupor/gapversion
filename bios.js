@@ -1,8 +1,6 @@
 /**
  * EXTEND PROTOTYPE
  */
- 
- alert('bios start');
  try{
  
  ERRORS_STACK = [];
@@ -592,7 +590,6 @@ Class.namespace = function(nspace, scope, construct){
 	
 	return scope;
 }
-	alert('bios complete');
 }catch(e){
 	alert('error bios');
 	ERRORBIOS = e;

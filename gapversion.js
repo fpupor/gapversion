@@ -43,8 +43,11 @@
 	
 	
 	checkVersion: function(){
+		
 		if(!such.checkNetwork() || !such.waitFileSystem(such.checkVersion))
 			return;
+			
+		alert('pass');
 			
 		such.downloadFile(such.options.SYSTEM, function(entry){
 			such.openFile(entry, function(e){
@@ -66,9 +69,11 @@
 			case self.NETWORK.CELL_3G:
 			case self.NETWORK.CELL_4G:
 			case self.NETWORK.WIFI:
+				alert('network');
 				return true;
 			break;
 			default:
+				alert('offline');
 				return false;
 		}
 	}
