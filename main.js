@@ -1,4 +1,4 @@
-﻿var MyApp = new gapVersion({
+var MyApp = new gapVersion({
 	SERVER: 'http://hml.conheca.me/gapversion/',
 	SYSTEM: 'system.php',
 
