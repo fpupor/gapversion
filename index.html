@@ -225,6 +225,18 @@
 		
 </head>
 <body>
+	
+	<textarea id="code">
+		teste = new Class({
+			construct: function(c){
+				alert('ok ' + c);
+			}
+		})
 		
+		var y = new teste('xxx');
+	</textarea>
+	
+	<input type="button" onclick="_code=document.getElementById('code');eval(_code.value);_code.value='';void(0);" value="execute">execute</input>
+	
 </body>
 </html>
