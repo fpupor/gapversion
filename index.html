@@ -7,12 +7,55 @@
 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, height=device-height, width=device-width, target-densityDpi=device-dpi" / > 
 	
 	<script src="phonegap.js"></script>
+	<!--script>
+		Connection = {
+			UNKNOWN: 1,
+			ETHERNET: 1,
+			WIFI: 1,
+			CELL_2G: 1,
+			CELL_3G: 1,
+			CELL_4G: 1,
+			NONE: 0
+		};
+		
+		LocalFileSystem = {
+			PERSISTENT: 1
+		}
+		
+		navigator.network = {
+			connection: {type : 1}
+		}
+		
+		window.requestFileSystem = function(a,b,c){
+			//setTimeout(function(){
+				c({});
+			//}, 2500);
+		}
+		FileEntry = function(){};
+		FileEntry.prototype.file = function(a,b,c){
+			a({});
+		};
+		
+		FileTransfer = function(){};
+		FileTransfer.prototype.download = function(a,b,c,d){
+			c(new FileEntry);
+		}
+		
+		FileReader = function(){};
+		FileReader.prototype.readAsText = function(a){
+			if(this.onload){
+				this.onload({
+					target: {
+						result: 'file reader result'
+					}
+				});
+			}
+		}
+	</script-->
 	<script src="_base/bios.js"></script>
 	
 	
 	<script>
-		
-		
 		var debug = new Class({
 			ACTIVE: false,
 			LIST: [],
@@ -22,7 +65,7 @@
 			},
 			
 			info: function(txt){
-				such.LIST.push({ type: 'log', txt: txt });
+				such.LIST.push({ type: 'info', txt: txt });
 			},
 			
 			error: function(txt, e){
@@ -72,7 +115,7 @@
 			FILESYSTEM: null,
 			DEBUG: null,
 			
-			construct: function(){
+			construct: function(options){
 				such.DEBUG = new debug(true);
 			
 				such.setFileSystem();
@@ -97,7 +140,7 @@
 				var fileTransfer = new FileTransfer();
 				var uri = encodeURI(such.options.SERVER + fileName);
 			
-				fileTransfer.download(uri, filePath, success, fail || function(){});
+				fileTransfer.download(uri, such.FILESYSTEM, success, fail || function(){});
 			},
 			
 			
@@ -106,17 +149,19 @@
 					var fileReader = new FileReader();
 					fileReader.onload = success;
 					fileReader.onerror = fail || function(){};
-					fileReader.readAsText(file);
+					fileReader.readAsText(file);					
 				}, fail || function(){});
 			},
 			
 			
 			checkVersion: function(){
-				if(!such.checkNetwork() || !waitFileSystem(such.checkVersion))
+				if(!such.checkNetwork() || !such.waitFileSystem(such.checkVersion))
 					return;
-				
+					
 				such.downloadFile(such.options.SYSTEM, function(entry){
 					such.openFile(entry, function(e){
+				
+						
 						such.DEBUG.info(e.target.result);
 					}, function(e){
 						such.DEBUG.error('open file system' , e);
@@ -139,7 +184,7 @@
 				}
 			}
 		},{
-			options:{
+			defaults:{
 				SERVER: null,
 				SYSTEM: null,
 				
@@ -169,9 +214,11 @@
 			}
 		});
 		
-		document.addEventListener("deviceready", application.checkVersion, false);
-		document.addEventListener("click", application.DEBUG.alertAll, false);
+		//document.addEventListener("deviceready", application.checkVersion, false);
+		//document.addEventListener("click", application.DEBUG.alertAll, false);
 	
+	
+		application.checkVersion();
 	</script>
 		
 </head>
