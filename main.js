@@ -8,3 +8,5 @@
 });
 
 document.addEventListener("deviceready", application.checkVersion, false);
+
+alert('runat');
