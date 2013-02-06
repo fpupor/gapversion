@@ -1,0 +1,182 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Gap Version</title>
+	<meta name="description" content="Gap Version">
+	<meta name="author" content="Wunderman">
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, height=device-height, width=device-width, target-densityDpi=device-dpi" / > 
+	
+	<script src="config.js"></script>
+	<script src="phonegap.js"></script>
+	<script src="sarue.js"></script>
+	
+	
+	<script>
+		
+		
+		var debug = new Class({
+			ACTIVE: false,
+			LIST: [],
+			
+			construct: function(status){
+				such.ACTIVE = status && true;
+			},
+			
+			info: function(txt){
+				such.LIST.push({ type: 'log', txt: txt });
+			},
+			
+			error: function(txt, e){
+				such.LIST.push({ type: 'error', txt: txt , e: e});
+			},
+			
+			warning: function(txt, e){
+				such.LIST.push({ type: 'warning', txt: txt, e: e});
+			},
+			
+			alertInfo: function(){
+				return such.mountString('info');
+			},
+			
+			alertWarning: function(){
+				return such.mountString('warning');
+			},
+			
+			alertError: function(){
+				return such.mountString('error');
+			},
+			
+			alertAll: function(){
+				return such.mountString('info,error,warning');
+			},
+			
+			mountString: function(t){
+				var output = '';
+				
+				for(var x = 0; x < such.LIST.length; x++){
+					var item = such.LIST[x];
+					
+					if(t.search(item.type) != -1){
+						output += item.type + ': ' + item.txt + '\n';
+					};
+				}
+				
+				if(such.ACTIVE)
+					alert(output);
+				
+				return output;
+			}
+		})
+		
+		var gapVersion  = new Class({
+			ERRORS: [],
+			FILESYSTEM: null,
+			DEBUG: null,
+			
+			construct: function(){
+				such.DEBUG = new debug(true);
+			
+				such.setFileSystem();
+			},
+			
+			setFileSystem: function(){
+				window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
+					such.FILESYSTEM = fileSystem;
+				 }, function(e){
+					such.DEBUG.error('request file system' , e);
+				 });
+			},
+			
+			waitFileSystem: function(callback){
+				if(such.FILESYSTEM)
+					return true;
+				
+				setTimeout(callback, 1000);
+			},
+			
+			downloadFile: function(fileName, success, fail){
+				var fileTransfer = new FileTransfer();
+				var uri = encodeURI(such.options.SERVER + fileName);
+			
+				fileTransfer.download(uri, filePath, success, fail || function(){});
+			},
+			
+			
+			openFile: function(entry, success, fail){
+				entry.file(function(file){
+					var fileReader = new FileReader();
+					fileReader.onload = success;
+					fileReader.onerror = fail || function(){};
+					fileReader.readAsText(file);
+				}, fail || function(){});
+			},
+			
+			
+			checkVersion: function(){
+				if(!such.checkNetwork() || !waitFileSystem(such.checkVersion))
+					return;
+				
+				such.downloadFile(such.options.SYSTEM, function(entry){
+					such.openFile(entry, function(e){
+						such.DEBUG.info(e.target.result);
+					}, function(e){
+						such.DEBUG.error('open file system' , e);
+					});
+				}, function(e){
+					such.DEBUG.error('download file system' , e);
+				})
+			},
+			
+			checkNetwork: function(){
+				switch(navigator.network.connection.type){
+					case self.NETWORK.ETHERNET:
+					case self.NETWORK.CELL_3G:
+					case self.NETWORK.CELL_4G:
+					case self.NETWORK.WIFI:
+						return true;
+					break;
+					default:
+						return false;
+				}
+			}
+		},{
+			options:{
+				SERVER: null,
+				SYSTEM: null,
+				
+				onReady: function(){}
+			},
+			
+			NETWORK: {
+				UNKNOWN	: Connection.UNKNOWN,
+				ETHERNET: Connection.ETHERNET,
+				WIFI	: Connection.WIFI,
+				CELL_2G	: Connection.CELL_2G,
+				CELL_3G	: Connection.CELL_3G,
+				CELL_4G	: Connection.CELL_4G,
+				NONE	: Connection.NONE
+			}
+		});
+		
+		
+
+
+		var application = new gapVersion({
+			SERVER: 'http://hml.conheca.me/gapversion/',
+			SYSTEM: 'system.php',
+		
+			onReady: function(){
+				such.DEBUG.info('app ok');
+			}
+		});
+		
+		document.addEventListener("deviceready", application.checkVersion, false);
+		document.addEventListener("click", application.DEBUG.alertAll, false);
+	
+	</script>
+		
+</head>
+<body>
+		
+</body>
+</html>
