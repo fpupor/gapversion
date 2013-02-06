@@ -8,7 +8,7 @@
 	
 	<script>
 		window.onerror = function(e){
-			alert(e.description);
+			alert(e.toString());
 		}
 	</script>
 	<script src="phonegap.js"></script>
@@ -60,7 +60,7 @@
 	<script src="_base/bios.js"></script>
 	
 	
-	<script>
+	<!--script>
 		var debug = new Class({
 			ACTIVE: false,
 			LIST: [],
@@ -221,7 +221,7 @@
 		
 		document.addEventListener("deviceready", application.checkVersion, false);
 		document.addEventListener("click", application.DEBUG.alertAll, false);
-	</script>
+	</script-->
 		
 </head>
 <body>
