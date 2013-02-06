@@ -3,6 +3,8 @@
  */
  
  try{
+ alert('bios start');
+ 
  ERRORS_STACK = [];
  
  window.onerror = function(){
@@ -590,7 +592,7 @@ Class.namespace = function(nspace, scope, construct){
 	
 	return scope;
 }
-	
+	alert('bios complete');
 }catch(e){
 	alert('error bios');
 	ERRORBIOS = e;
