@@ -3,7 +3,7 @@ alert('init run');
 document.addEventListener("deviceready", function(){
 	alert('ready');
 	
-	var MyApp = new gapVersion({
+	MyApp = new gapVersion({
 		SERVER: 'http://hml.conheca.me/gapversion/',
 		SYSTEM: 'system.php',
 
@@ -11,7 +11,8 @@ document.addEventListener("deviceready", function(){
 			such.DEBUG.info('app ok');
 		}
 	});
-	application.checkVersion();
+	
+	MyApp.checkVersion();
 }, false);
 
 alert('runat');
