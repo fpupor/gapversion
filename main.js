@@ -8,5 +8,11 @@ deviceready.push(function(){
 		}
 	});
 
-	MyApp.checkVersion();
+	
+	document.addEventListener("online", function(){
+		MyApp.online();
+	}, false);
+	document.addEventListener("offline", function(){
+		MyApp.offline();
+	}, false);
 });
