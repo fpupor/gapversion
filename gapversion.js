@@ -11,11 +11,15 @@
 		},
 		
 		online: function(){
+			alert('online');
+		
 			such.ONLINE = true;
 			such.setFileSystem(such.checkVersion);
 		},
 		
 		offline: function(){
+			alert('offline');
+		
 			such.ONLINE = false;
 			such.ready();
 		},
@@ -61,15 +65,21 @@
 		
 		
 		checkVersion: function(){
+			alert('check version');
+			
 			such.downloadFile(such.options.SYSTEM, "Assets", function(fileEntry){
+				alert('Success download');
+				
 				such.openFile(fileEntry, function(file){
-					alert('Success');
+					alert('Success open');
 					alert(file.target.result);
 					such.DEBUG.info(file.target.result);
 				}, function(e){
+					alert('Error open');
 					such.DEBUG.error('open file system' , e);
 				});
 			}, function(e){
+				alert('Error download');
 				such.DEBUG.error('download file system' , e);
 			})
 		}
