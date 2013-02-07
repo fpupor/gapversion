@@ -9,9 +9,14 @@ deviceready.push(function(){
 	});
 
 	
+	document.addEventListener("click", function(){
+		MyApp.DEBUG.alertAll();
+	}, false);
+	
 	document.addEventListener("online", function(){
 		MyApp.online();
 	}, false);
+	
 	document.addEventListener("offline", function(){
 		MyApp.offline();
 	}, false);
