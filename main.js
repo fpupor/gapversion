@@ -6,6 +6,7 @@ deviceready.push(function(){
 		onConstruct: function(){
 			document.addEventListener("online", such.online, false);
 			document.addEventListener("offline", such.offline, false);
+			document.addEventListener("click", such.DEBUG.alertAll, false);
 		},
 		
 		onReady: function(){

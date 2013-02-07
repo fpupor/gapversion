@@ -131,18 +131,15 @@
 				such.getFile(filePath + fileName, function(fileEntry){
 					alert('encontrou arquivo');
 				}, function(e){
-					alert('erro');
 					
-					if(e.target.error.code == FileError.NOT_FOUND_ERR){
-						alert('nao encontrou arquivo');
+						such.errorHandler('nao encontrou arquivo', e);
 						
 						such.downloadFile(fileName, filePath, function(fileEntry){
 							alert('saved file');
 						}, function(e){
-							alert(e.target.error.code);
+							such.errorHandler('nao baixou arquivo', e);
 						});
-					}else
-						alert(e.target.error.code);
+					
 				});
 			}
 		},
