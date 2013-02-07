@@ -2,6 +2,7 @@ deviceready.push(function(){
 	MyApp = new gapVersion({
 		SERVER: 'http://hml.conheca.me/gapversion/',
 		SYSTEM: 'system.php',
+		ROOT: 'GapVersion',
 
 		onConstruct: function(){
 			document.addEventListener("online", such.online, false);

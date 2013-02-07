@@ -51,7 +51,9 @@
 		setFileSystem: function(callback){
 			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
 				such.FILESYSTEM = fileSystem;
-				callback(fileSystem);
+				such.getDirectory(such.ROOT, callback, function(e){
+					such.errorHandler('request real root' , e);
+				});
 			 }, function(e){
 				such.errorHandler('request root' , e);
 			 });
@@ -105,6 +107,8 @@
 			var fileName = tratament.pop();
 			var filePath = tratament.reverse().join('/');
 			var uri = encodeURI(such.options.SERVER + filePath + fileName);
+		
+			alert(fileName+'\n'+dirName+'\n'+uri);
 		
 			such.getDirectory(dirName, function(dirEntry){
 				fileTransfer.download(uri, dirEntry.fullPath + '/' + fileName, success, fail || such.fn);
