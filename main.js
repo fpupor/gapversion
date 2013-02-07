@@ -14,15 +14,10 @@ deviceready.push(function(){
 		MyApp.DEBUG.alertAll();
 	}, false);
 	
-	document.addEventListener("online", function(){
-		alert('on');
-		MyApp.online();
-	}, false);
+	document.addEventListener("online", MyApp.online, false);
+	document.addEventListener("offline", MyApp.offline, false);
 	
-	document.addEventListener("offline", function(){
-		alert('off');
-		MyApp.offline();
-	}, false);
+	MyApp.checkNetwork();
 	
 	alert('ready end');
 });

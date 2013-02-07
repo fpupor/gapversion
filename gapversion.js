@@ -24,6 +24,20 @@
 			such.ready();
 		},
 		
+		checkNetwork: function(){
+			switch(navigator.network.connection.type){
+				case self.NETWORK.ETHERNET:
+				case self.NETWORK.CELL_2G:
+				case self.NETWORK.CELL_3G:
+				case self.NETWORK.CELL_4G:
+				case self.NETWORK.WIFI:
+					such.online();
+				break;
+				default:
+					such.offline();
+			}
+		},
+		
 		ready: function(){
 			such.options.onReady();
 		},
@@ -89,6 +103,16 @@
 			SYSTEM: null,
 			
 			onReady: function(){}
+		},
+		
+		NETWORK: {
+			UNKNOWN	: Connection.UNKNOWN,
+			ETHERNET: Connection.ETHERNET,
+			WIFI	: Connection.WIFI,
+			CELL_2G	: Connection.CELL_2G,
+			CELL_3G	: Connection.CELL_3G,
+			CELL_4G	: Connection.CELL_4G,
+			NONE	: Connection.NONE
 		}
 	});
 });
