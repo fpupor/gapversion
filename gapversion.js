@@ -51,7 +51,10 @@
 		setFileSystem: function(callback){
 			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
 				such.FILESYSTEM = fileSystem;
-				such.getDirectory(such.ROOT, callback, function(e){
+				such.getDirectory(such.ROOT, function(fileSystemRoot){
+					such.FILESYSTEM = fileSystemRoot;
+					callback(fileSystemRoot);
+				}, function(e){
 					such.errorHandler('request real root' , e);
 				});
 			 }, function(e){
