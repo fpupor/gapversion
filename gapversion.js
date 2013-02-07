@@ -113,7 +113,7 @@
 		updateVersion: function(){
 			var updates = such.UPDATES.files;
 			
-			for(var u = 0; u < updates.length; l++){
+			for(var u = 0; u < updates.length; u++){
 				alert(updates[u].name + ' : ' + updates[u].timestamp)
 			}
 			
