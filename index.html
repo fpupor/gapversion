@@ -31,11 +31,14 @@
 	
 </head>
 <body>
+	<pre id="log">
+	<pre>
+
 	<br/>
 	<br/>
 	<br/>
 	<br/>
-	<a href="#" onclick="MyApp.DEBUG.alertError();void(0);">LOGS</a>
+	<a href="#" onclick="document.getElementById('log').innerHTML = MyApp.DEBUG.mountString('error',true);void(0);">LOGS</a>
 	
 </body>
 </html>

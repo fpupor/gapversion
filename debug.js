@@ -20,19 +20,23 @@ deviceready.push(function(){
 		},
 		
 		alertInfo: function(){
-			return such.mountString('info');
+			if(such.ACTIVE)
+				alert(such.mountString('info'));
 		},
 		
 		alertWarning: function(){
-			return such.mountString('warning');
+			if(such.ACTIVE)
+				alert(such.mountString('warning'));
 		},
 		
 		alertError: function(){
-			return such.mountString('error', true);
+			if(such.ACTIVE)
+				alert(such.mountString('error', true));
 		},
 		
 		alertAll: function(){
-			return such.mountString('info,error,warning');
+			if(such.ACTIVE)
+				alert(such.mountString('info,error,warning'));
 		},
 		
 		mountString: function(t, f){
@@ -46,14 +50,11 @@ deviceready.push(function(){
 					
 					if(f){
 						for(var p in item.e){
-							output += '\t' + p + ' : ' + item.e[p];
+							output += '\t' + p + ' : ' + item.e[p] + '\n';
 						}
 					}
 				};
 			}
-			
-			if(such.ACTIVE)
-				alert(output);
 			
 			return output;
 		}
