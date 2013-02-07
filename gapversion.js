@@ -56,7 +56,7 @@
 					callback(fileSystemRoot);
 				}, function(e){
 					such.errorHandler('request real root' , e);
-				});
+				}, true);
 			 }, function(e){
 				such.errorHandler('request root' , e);
 			 });
