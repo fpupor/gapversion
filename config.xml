@@ -2,7 +2,7 @@
 <widget xmlns = "http://www.w3.org/ns/widgets"
 	xmlns:gap= "http://phonegap.com/ns/1.0"
 	id= "br.com.wunderman.gapversion"
-	version= "0.0.2">
+	version= "0.0.3">
 
 	<name>Gap Version</name> 
 
