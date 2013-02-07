@@ -123,7 +123,7 @@
 			var updates = such.UPDATES.files;
 			
 			for(var u = 0; u < updates.length; u++){
-				var tratament = ('Assets/' + updates[u].name).split('/').reverse()[0];
+				var tratament = ('Assets/' + updates[u].name).split('/').reverse();
 					
 				var fileName = tratament.pop();
 				var filePath = tratament.reverse().join('/');
@@ -131,6 +131,8 @@
 				such.getFile(filePath + fileName, function(fileEntry){
 					alert('encontrou arquivo');
 				}, function(e){
+					alert('erro');
+					
 					if(e.target.error.code == FileError.NOT_FOUND_ERR){
 						alert('nao encontrou arquivo');
 						
