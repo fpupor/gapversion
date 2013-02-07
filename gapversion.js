@@ -103,13 +103,13 @@
 			}, callback, fail);
 		},
 		
-		downloadFile: function(filePath, dirName, success, fail){
+		downloadFile: function(filePathAndName, dirName, success, fail){
 			var fileTransfer = new FileTransfer();
 			
-			var tratament = (filePath).split('/');
+			var tratament = (filePathAndName).split('/');
 			var fileName = tratament.pop();
 			var filePath = tratament.reverse().join('/');
-			var uri = encodeURI(such.options.SERVER + filePath + fileName);
+			var uri = encodeURI(such.options.SERVER + filePathAndName);
 		
 			alert(fileName+'\n'+dirName+'\n'+uri);
 		
