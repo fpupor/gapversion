@@ -1,99 +1,97 @@
-﻿deviceready.push(function(){
-	gapVersion  = new Class({
-		ERRORS: [],
-		FILESYSTEM: null,
-		DEBUG: null,
+﻿gapVersion  = new Class({
+	ERRORS: [],
+	FILESYSTEM: null,
+	DEBUG: null,
+	
+	construct: function(options){
+		such.DEBUG = new debug(true);
+	
+		such.setFileSystem();
+	},
+	
+	setFileSystem: function(){
+		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
+			such.FILESYSTEM = fileSystem;
+		 }, function(e){
+			such.DEBUG.error('request file system' , e);
+		 });
+	},
+	
+	waitFileSystem: function(callback){
+		if(such.FILESYSTEM)
+			return true;
 		
-		construct: function(options){
-			such.DEBUG = new debug(true);
+		setTimeout(callback, 1000);
+	},
+	
+	downloadFile: function(fileName, success, fail){
+		var fileTransfer = new FileTransfer();
+		var uri = encodeURI(such.options.SERVER + fileName);
+	
+		fileTransfer.download(uri, such.FILESYSTEM, success, fail || function(){});
+	},
+	
+	
+	openFile: function(entry, success, fail){
+		entry.file(function(file){
+			var fileReader = new FileReader();
+			fileReader.onload = success;
+			fileReader.onerror = fail || function(){};
+			fileReader.readAsText(file);					
+		}, fail || function(){});
+	},
+	
+	
+	checkVersion: function(){
 		
-			such.setFileSystem();
-		},
-		
-		setFileSystem: function(){
-			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
-				such.FILESYSTEM = fileSystem;
-			 }, function(e){
-				such.DEBUG.error('request file system' , e);
-			 });
-		},
-		
-		waitFileSystem: function(callback){
-			if(such.FILESYSTEM)
-				return true;
+		if(!such.checkNetwork() || !such.waitFileSystem(such.checkVersion))
+			return;
 			
-			setTimeout(callback, 1000);
-		},
-		
-		downloadFile: function(fileName, success, fail){
-			var fileTransfer = new FileTransfer();
-			var uri = encodeURI(such.options.SERVER + fileName);
-		
-			fileTransfer.download(uri, such.FILESYSTEM, success, fail || function(){});
-		},
-		
-		
-		openFile: function(entry, success, fail){
-			entry.file(function(file){
-				var fileReader = new FileReader();
-				fileReader.onload = success;
-				fileReader.onerror = fail || function(){};
-				fileReader.readAsText(file);					
-			}, fail || function(){});
-		},
-		
-		
-		checkVersion: function(){
+		alert('pass');
 			
-			if(!such.checkNetwork() || !such.waitFileSystem(such.checkVersion))
-				return;
+		such.downloadFile(such.options.SYSTEM, function(entry){
+			such.openFile(entry, function(e){
+		
 				
-			alert('pass');
-				
-			such.downloadFile(such.options.SYSTEM, function(entry){
-				such.openFile(entry, function(e){
-			
-					
-					such.DEBUG.info(e.target.result);
-				}, function(e){
-					such.DEBUG.error('open file system' , e);
-				});
+				such.DEBUG.info(e.target.result);
 			}, function(e){
-				such.DEBUG.error('download file system' , e);
-			})
-		},
-		
-		checkNetwork: function(){
-			switch(navigator.network.connection.type){
-				case self.NETWORK.ETHERNET:
-				case self.NETWORK.CELL_2G:
-				case self.NETWORK.CELL_3G:
-				case self.NETWORK.CELL_4G:
-				case self.NETWORK.WIFI:
-					alert('network');
-					return true;
-				break;
-				default:
-					alert('offline');
-					return false;
-			}
+				such.DEBUG.error('open file system' , e);
+			});
+		}, function(e){
+			such.DEBUG.error('download file system' , e);
+		})
+	},
+	
+	checkNetwork: function(){
+		switch(navigator.network.connection.type){
+			case self.NETWORK.ETHERNET:
+			case self.NETWORK.CELL_2G:
+			case self.NETWORK.CELL_3G:
+			case self.NETWORK.CELL_4G:
+			case self.NETWORK.WIFI:
+				alert('network');
+				return true;
+			break;
+			default:
+				alert('offline');
+				return false;
 		}
-	},{
-		defaults:{
-			SERVER: null,
-			SYSTEM: null,
-			
-			onReady: function(){}
-		},
+	}
+},{
+	defaults:{
+		SERVER: null,
+		SYSTEM: null,
 		
-		NETWORK: {
-			UNKNOWN	: Connection.UNKNOWN,
-			ETHERNET: Connection.ETHERNET,
-			WIFI	: Connection.WIFI,
-			CELL_2G	: Connection.CELL_2G,
-			CELL_3G	: Connection.CELL_3G,
-			CELL_4G	: Connection.CELL_4G,
-			NONE	: Connection.NONE
-		}
-	});
+		onReady: function(){}
+	},
+	
+	NETWORK: {
+		UNKNOWN	: Connection.UNKNOWN,
+		ETHERNET: Connection.ETHERNET,
+		WIFI	: Connection.WIFI,
+		CELL_2G	: Connection.CELL_2G,
+		CELL_3G	: Connection.CELL_3G,
+		CELL_4G	: Connection.CELL_4G,
+		NONE	: Connection.NONE
+	}
 });
