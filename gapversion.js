@@ -106,7 +106,7 @@
 		downloadFile: function(filePath, dirName, success, fail){
 			var fileTransfer = new FileTransfer();
 			
-			var tratament = (filePath).split('/').reverse();
+			var tratament = (filePath).split('/');
 			var fileName = tratament.pop();
 			var filePath = tratament.reverse().join('/');
 			var uri = encodeURI(such.options.SERVER + filePath + fileName);
