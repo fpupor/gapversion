@@ -7,11 +7,22 @@
 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, height=device-height, width=device-width, target-densityDpi=device-dpi" / > 
 	
 	
+	<script type="text/javascript">
+		deviceready = [];
+	</script>
+	
 	<script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
 	<script type="text/javascript" charset="utf-8" src="bios.js"></script>
 	<script type="text/javascript" charset="utf-8" src="debug.js"></script>
 	<script type="text/javascript" charset="utf-8" src="gapversion.js"></script>
 	<script type="text/javascript" charset="utf-8" src="main.js"></script>
+	
+	<script type="text/javascript">
+	document.addEventListener("deviceready", function(){
+		for(var dr = 0; dr < deviceready.length; dr++)
+			deviceready[dr]();
+	}, false);
+	</script>
 	
 </head>
 <body>

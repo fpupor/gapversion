@@ -1,21 +1,12 @@
-alert('init run');
-alert(gapVersion);
+deviceready.push(function(){
+	MyApp = new gapVersion({
+		SERVER: 'http://hml.conheca.me/gapversion/',
+		SYSTEM: 'system.php',
 
-MyApp = new gapVersion({
-	SERVER: 'http://hml.conheca.me/gapversion/',
-	SYSTEM: 'system.php',
+		onReady: function(){
+			such.DEBUG.info('app ok');
+		}
+	});
 
-	onReady: function(){
-		such.DEBUG.info('app ok');
-	}
-});
-
-
-document.addEventListener("deviceready", function(){
-
-	alert(MyApp);
-	
 	MyApp.checkVersion();
-	
-	alert('runat');
-}, false);
+});
