@@ -28,14 +28,14 @@ deviceready.push(function(){
 		},
 		
 		alertError: function(){
-			return such.mountString('error');
+			return such.mountString('error', true);
 		},
 		
 		alertAll: function(){
 			return such.mountString('info,error,warning');
 		},
 		
-		mountString: function(t){
+		mountString: function(t, f){
 			var output = '';
 			
 			for(var x = 0; x < such.LIST.length; x++){
@@ -43,6 +43,12 @@ deviceready.push(function(){
 				
 				if(t.search(item.type) != -1){
 					output += item.type + ': ' + item.txt + '\n';
+					
+					if(f){
+						for(var p in item.e){
+							output += '\t' + p + ' : ' + item.e[p];
+						}
+					}
 				};
 			}
 			

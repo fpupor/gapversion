@@ -98,9 +98,13 @@
 			}, callback, fail);
 		},
 		
-		downloadFile: function(fileName, dirName, success, fail){
+		downloadFile: function(filePath, dirName, success, fail){
 			var fileTransfer = new FileTransfer();
-			var uri = encodeURI(such.options.SERVER + fileName);
+			
+			var tratament = (filePath).split('/').reverse();
+			var fileName = tratament.pop();
+			var filePath = tratament.reverse().join('/');
+			var uri = encodeURI(such.options.SERVER + filePath + fileName);
 		
 			such.getDirectory(dirName, function(dirEntry){
 				fileTransfer.download(uri, dirEntry.fullPath + '/' + fileName, success, fail || such.fn);
@@ -123,18 +127,18 @@
 			var updates = such.UPDATES.files;
 			
 			for(var u = 0; u < updates.length; u++){
-				var tratament = ('Assets/' + updates[u].name).split('/').reverse();
+				var tratament = (updates[u].name).split('/').reverse();
 					
 				var fileName = tratament.pop();
 				var filePath = tratament.reverse().join('/');
 				
-				such.getFile(filePath + fileName, function(fileEntry){
+				such.getFile('Assets/' + filePath + fileName, function(fileEntry){
 					alert('encontrou arquivo');
 				}, function(e){
 					
 						such.errorHandler('nao encontrou arquivo', e);
 						
-						such.downloadFile(fileName, filePath, function(fileEntry){
+						such.downloadFile(filePath + fileName, 'Assets/' + filePath, function(fileEntry){
 							alert('saved file');
 						}, function(e){
 							such.errorHandler('nao baixou arquivo', e);
