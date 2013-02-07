@@ -51,7 +51,7 @@
 		setFileSystem: function(callback){
 			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
 				such.FILESYSTEM = fileSystem;
-				such.getDirectory(such.ROOT, function(fileSystemRoot){
+				such.getDirectory(such.options.ROOT, function(fileSystemRoot){
 					such.FILESYSTEM = fileSystemRoot;
 					callback(fileSystemRoot);
 				}, function(e){
@@ -210,6 +210,7 @@
 		defaults:{
 			SERVER: null,
 			SYSTEM: null,
+			ROOT: 'GapVersion',
 			
 			onConstruct: function(){},
 			onReady: function(){},
