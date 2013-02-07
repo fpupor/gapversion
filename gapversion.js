@@ -88,7 +88,14 @@
 			such.FILESYSTEM.root.getDirectory(dirName, {
 				create: create,
 				exclusive: false
-			}, callback)
+			}, callback, fail)
+		},
+		
+		getFile: function(fileName, callback, fail, create){
+			such.FILESYSTEM.root.getFile(fileName, {
+				create: create,
+				exclusive: false
+			}, callback, fail);
 		},
 		
 		downloadFile: function(fileName, dirName, success, fail){
@@ -111,13 +118,31 @@
 		},
 		
 		updateVersion: function(){
+			such.options.onUpdateVersion();
+			
 			var updates = such.UPDATES.files;
 			
 			for(var u = 0; u < updates.length; u++){
-				alert(updates[u].name + ' : ' + updates[u].timestamp)
+				var tratament = ('Assets/' + updates[u].name).split('/').reverse()[0];
+					
+				var fileName = tratament.pop();
+				var filePath = tratament.reverse().join('/');
+				
+				such.getFile(filePath + fileName, function(fileEntry){
+					alert('encontrou arquivo');
+				}, function(e){
+					if(e.target.error.code == FileError.NOT_FOUND_ERR){
+						alert('nao encontrou arquivo');
+						
+						such.downloadFile(fileName, filePath, function(fileEntry){
+							alert('saved file');
+						}, function(e){
+							alert(e.target.error.code);
+						});
+					}else
+						alert(e.target.error.code);
+				});
 			}
-			
-			such.options.onUpdateVersion();
 		},
 		
 		checkVersion: function(){
@@ -126,7 +151,7 @@
 				
 			such.DEBUG.info('check version');
 			
-			such.downloadFile(such.options.SYSTEM, "Assets", function(fileEntry){
+			such.downloadFile(such.options.SYSTEM, "Temp", function(fileEntry){
 				such.DEBUG.info('download file version');
 				
 				such.openFile(fileEntry, function(file){
