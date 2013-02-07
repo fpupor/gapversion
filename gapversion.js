@@ -63,7 +63,7 @@
 	},
 	
 	checkNetwork: function(){
-		switch(navigator.connection.type || navigator.network.connection.type){
+		switch(navigator['network']['connection']['type']){
 			case self.NETWORK.ETHERNET:
 			case self.NETWORK.CELL_2G:
 			case self.NETWORK.CELL_3G:
