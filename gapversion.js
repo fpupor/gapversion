@@ -4,7 +4,7 @@
 		FILESYSTEM: null,
 		DEBUG: null,
 		ONLINE: false,
-		FN: function(){},
+		fn: function(){},
 		
 		construct: function(options){
 			such.DEBUG = new debug(true);
@@ -45,8 +45,8 @@
 			var uri = encodeURI(such.options.SERVER + fileName);
 		
 			such.getDirectory(dirName, function(dirEntry){
-				fileTransfer.download(uri, dirEntry.fullPath + '/' + fileName, success, fail || such.FN);
-			}, fail || such.FN, true);
+				fileTransfer.download(uri, dirEntry.fullPath + '/' + fileName, success, fail || such.fn);
+			}, fail || such.fn, true);
 		},
 		
 		
@@ -54,9 +54,9 @@
 			fileEntry.file(function(file){
 				var fileReader = new FileReader();
 				fileReader.onload = success;
-				fileReader.onerror = fail || such.FN;
+				fileReader.onerror = fail || such.fn;
 				fileReader.readAsText(file);					
-			}, fail || such.FN);
+			}, fail || such.fn);
 		},
 		
 		
