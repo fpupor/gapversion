@@ -1,27 +1,33 @@
 ﻿deviceready.push(function(){
 	gapVersion  = new Class({
+		UPDATES: null,
 		ERRORS: [],
 		FILESYSTEM: null,
 		DEBUG: null,
 		ONLINE: false,
+		VERSION: 0,
+		
 		fn: function(){},
 		
 		construct: function(options){
 			such.DEBUG = new debug(true);
+			
+			such.checkNetwork();
+			
+			such.setFileSystem(function(){
+				such.getVersion(function(v){
+					such.checkVersion();	
+					such.options.onConstruct(v);
+				});
+			});
 		},
 		
 		online: function(){
-			alert('online');
-		
-			such.ONLINE = true;
-			such.setFileSystem(such.checkVersion);
+			return such.ONLINE = true;
 		},
 		
 		offline: function(){
-			alert('offline');
-		
-			such.ONLINE = false;
-			such.ready();
+			return such.ONLINE = false;
 		},
 		
 		checkNetwork: function(){
@@ -31,10 +37,10 @@
 				case self.NETWORK.CELL_3G:
 				case self.NETWORK.CELL_4G:
 				case self.NETWORK.WIFI:
-					such.online();
+					return such.online();
 				break;
 				default:
-					such.offline();
+					return such.offline();
 			}
 		},
 		
@@ -47,8 +53,35 @@
 				such.FILESYSTEM = fileSystem;
 				callback(fileSystem);
 			 }, function(e){
-				such.DEBUG.error('request file system' , e);
+				such.errorHandler('request root' , e);
 			 });
+		},
+		
+		getVersion: function(callback, fail){
+			such.FILESYSTEM.root.getFile("version.txt", {
+				create: true, 
+				exclusive: false
+			}, function(fileEntry){
+				such.DEBUG.info('get user version');
+				
+				such.openFile(fileEntry, function(file){
+					such.VERSION = parseFloat(file.target.result);
+					
+					if(such.VERSION == NaN){
+						fileEntry.createWriter(function(writer){
+							writer.write("0");
+						});
+						
+						such.VERSION = 0;
+					}
+					
+					callback(such.VERSION);
+				}, function(e){
+					such.errorHandler('open user version', e);
+				})
+			}, function(){
+				such.errorHandler('get user version', e);
+			});
 		},
 		
 		getDirectory: function(dirName, callback, fail, create){
@@ -77,32 +110,79 @@
 			}, fail || such.fn);
 		},
 		
+		updateVersion: function(){
+			var updates = such.UPDATES.files;
+			
+			for(var u = 0; u < updates.length; l++){
+				alert(updates[u].name + ' : ' + updates[u].timestamp)
+			}
+			
+			such.options.onUpdateVersion();
+		},
 		
 		checkVersion: function(){
-			alert('check version');
+			if(!such.ONLINE)
+				return such.DEBUG.info('offline to check version') && false;
+				
+			such.DEBUG.info('check version');
 			
 			such.downloadFile(such.options.SYSTEM, "Assets", function(fileEntry){
-				alert('Success download');
+				such.DEBUG.info('download file version');
 				
 				such.openFile(fileEntry, function(file){
-					alert('Success open');
-					alert(file.target.result);
-					such.DEBUG.info(file.target.result);
+					such.DEBUG.info('open file version');
+					such.UPDATES = such.parseProtocol(file.target.result);
+					
+					if(such.options.onCheckVersion(such.UPDATES.version > such.VERSION))
+						such.updateVersion();
 				}, function(e){
-					alert('Error open');
-					such.DEBUG.error('open file system' , e);
+					such.errorHandler('open file version' , e);
 				});
 			}, function(e){
-				alert('Error download');
-				such.DEBUG.error('download file system' , e);
+				such.errorHandler('download file version' , e);
 			})
+		},
+		
+		errorHandler: function(txt, e){
+			such.DEBUG.error(txt, e);
+			such.options.onErrorHandler(txt, e);
+		},
+		
+		parseProtocol: function(txt){
+			if(!txt || txt == '')
+				return [];
+		
+			var lines = txt.split('\n');
+			var output = {
+				version: parseFloat(lines[0]) || 0,
+				files:[]
+			};
+			
+			for(var l = 1; l < lines.length; l++){
+				var file = lines[l].split('#');
+				
+				if(file.length > 0){
+					output.files.push({
+						name: file[0],
+						timestamp: file[1]
+					});
+				}
+			}
+			
+			return output;
 		}
 	},{
 		defaults:{
 			SERVER: null,
 			SYSTEM: null,
 			
-			onReady: function(){}
+			onConstruct: function(){},
+			onReady: function(){},
+			onCheckVersion: function(){},
+			onUpdateVersion: function(){},
+			onUpdateProgress: function(){},
+			onUpdateComplete: function(){},
+			onUpdateError: function(){}
 		},
 		
 		NETWORK: {
