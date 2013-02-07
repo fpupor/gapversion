@@ -1,4 +1,5 @@
 alert('init run');
+alert(gapVersion);
 
 MyApp = new gapVersion({
 	SERVER: 'http://hml.conheca.me/gapversion/',
