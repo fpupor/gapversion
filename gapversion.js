@@ -50,7 +50,7 @@
 		
 		setFileSystem: function(callback){
 			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
-				such.FILESYSTEM = fileSystem;
+				such.FILESYSTEM = fileSystem.root;
 				such.getDirectory(such.options.ROOT, function(fileSystemRoot){
 					such.FILESYSTEM = fileSystemRoot;
 					callback(fileSystemRoot);
@@ -63,7 +63,7 @@
 		},
 		
 		getVersion: function(callback, fail){
-			such.FILESYSTEM.root.getFile("version.txt", {
+			such.FILESYSTEM.getFile("version.txt", {
 				create: true, 
 				exclusive: false
 			}, function(fileEntry){
@@ -90,14 +90,14 @@
 		},
 		
 		getDirectory: function(dirName, callback, fail, create){
-			such.FILESYSTEM.root.getDirectory(dirName, {
+			such.FILESYSTEM.getDirectory(dirName, {
 				create: create,
 				exclusive: false
 			}, callback, fail)
 		},
 		
 		getFile: function(fileName, callback, fail, create){
-			such.FILESYSTEM.root.getFile(fileName, {
+			such.FILESYSTEM.getFile(fileName, {
 				create: create,
 				exclusive: false
 			}, callback, fail);
