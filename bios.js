@@ -1,6 +1,9 @@
 /**
  * EXTEND PROTOTYPE
  */
+ 
+ alert(deviceready);
+ 
  try{
 	deviceready.push(function(){
 		 ERRORS_STACK = [];
