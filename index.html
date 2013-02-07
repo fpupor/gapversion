@@ -19,16 +19,13 @@
 	
 	<script type="text/javascript">
 	document.addEventListener("deviceready", function(){
-		alert('foi');
-	
-		for(var dr = 0; dr < deviceready.length; dr++)
+		for(var dr = 0; dr < deviceready.length; dr++){
 			try{
 				deviceready[dr]();
 			}catch(e){
 				alert(e);
 			}
-			
-		alert('fim');
+		};
 	}, false);
 	</script>
 	

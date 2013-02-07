@@ -1,6 +1,4 @@
-﻿alert(deviceready);
-
-deviceready.push(function(){
+﻿deviceready.push(function(){
 	gapVersion  = new Class({
 		ERRORS: [],
 		FILESYSTEM: null,

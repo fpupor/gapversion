@@ -1,5 +1,3 @@
-alert(deviceready);
-
 deviceready.push(function(){
 	debug = new Class({
 		ACTIVE: false,
