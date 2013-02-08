@@ -154,23 +154,51 @@
 				var fileName = tratament.pop();
 				var filePath = tratament.join('/');
 					filePath = filePath + ((filePath != '' && filePath.charAt(filePath.length-1) != '/') ? '/' : '');
+					
+				var fileDate = updates[u].name;
+				
+				var uriPath = such.UPDATES.version.toFixed(1) + '/' + filePath + fileName;
+				var localPath = 'Assets/' + filePath;
 				
 				such.getFile('Assets/' + filePath + fileName, function(fileEntry){
 					fileEntry.getMetadata(function(metadata){
-						alert(metadata.modificationTime + '\n' + (new Date(metadata.modificationTime).getTime()));
+						var nowFileDate = new Date(metadata.modificationTime);
+						
+						if(nowFileDate.getTime() < fileDate.getTime()){
+							alert('update\n'+uriPath);
+							such.updateFile(uriPath, localPath);
+						}
 					})
 				}, function(e){
-					
-						such.errorHandler('nao encontrou arquivo', e);
-						
-						such.downloadFile(such.UPDATES.version.toFixed(1) + '/' + filePath + fileName, 'Assets/' + filePath, function(fileEntry){
-							alert('saved file');
-						}, function(e){
-							such.errorHandler('nao baixou arquivo', e);
-						});
-					
+					such.updateFile(uriPath, localPath);
 				});
 			}
+			
+			such.updateStart();
+		},
+		
+		updateStart: function(){
+			such.UPDATES.chain.run();
+		},
+		
+		updateFile: function(uriPath, localPath){
+			such.UPDATES.chain.add(function(complete){
+				such.downloadFile(uriPath, localPath, function(fileEntry){
+					alert('saved file');
+					complete();
+				}, function(e){
+					such.errorHandler('nao baixou arquivo', e);
+					complete();
+				});
+			});
+		},
+		
+		updateProgress: function(id){
+			such.options.onUpdateProgress();
+		},
+		
+		updateComplete: function(id){
+			such.options.onUpdateComplete();
 		},
 		
 		checkVersion: function(){
@@ -207,6 +235,9 @@
 		
 			var lines = txt.split('\n');
 			var output = {
+				chain: new Chain({
+					onFinish: such.updateComplete
+				}),
 				version: parseFloat(lines[0]) || 0,
 				files:[]
 			};
