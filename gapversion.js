@@ -233,7 +233,8 @@
 			onUpdateVersion: function(){},
 			onUpdateProgress: function(){},
 			onUpdateComplete: function(){},
-			onUpdateError: function(){}
+			onUpdateError: function(){},
+			onErrorHandler: function(){}
 		},
 		
 		NETWORK: {
