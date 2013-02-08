@@ -252,7 +252,7 @@
 							timestamp: new Date(parseFloat(file[1]))
 						});
 						
-						alert(file[1]+'\n'+(new Date(file[1])).getTime());
+						alert(file[1]+'\n'+(new Date(parseFloat(file[1]))).getTime());
 					}
 				}
 			}
