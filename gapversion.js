@@ -160,7 +160,7 @@
 					
 						such.errorHandler('nao encontrou arquivo', e);
 						
-						such.downloadFile(such.UPDATES.version.toFixed(1) + '/' +filePath + (filePath.charAt(filePath.length-1) != '/' ? '/' : '') + fileName, 'Assets/' + filePath, function(fileEntry){
+						such.downloadFile(such.UPDATES.version.toFixed(1) + '/' + filePath + ((filePath != '' && filePath.charAt(filePath.length-1) != '/') ? '/' : '') + fileName, 'Assets/' + filePath, function(fileEntry){
 							alert('saved file');
 						}, function(e){
 							such.errorHandler('nao baixou arquivo', e);
