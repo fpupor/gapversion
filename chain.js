@@ -1,102 +1,104 @@
-﻿Chain = new Class({
-    LIST: [],
-	FINISHED: false,
-	
-    defaults: {
-        async: false,
-        lastInFirstOut: false,
-        onFinish: function () { },
-        onComplete: function () { }
-    },
+﻿deviceready.push(function(){
+	Chain = new Class({
+		LIST: [],
+		FINISHED: false,
+		
+		defaults: {
+			async: false,
+			lastInFirstOut: false,
+			onFinish: function () { },
+			onComplete: function () { }
+		},
 
-    construct: function () {
+		construct: function () {
 
-    },
+		},
 
-    add: function (fn) {
-        if (!$istype(fn, 'function')) {
-            throw new Error('O metodo suporta apenas funções');
-            return;
-        }
+		add: function (fn) {
+			if (!$istype(fn, 'function')) {
+				throw new Error('O metodo suporta apenas funções');
+				return;
+			}
 
-        such.LIST.push({
-            fn: fn,
-            executed: false,
-            complete: false
-        });
-    },
+			such.LIST.push({
+				fn: fn,
+				executed: false,
+				complete: false
+			});
+		},
 
-    run: function () {
-		if (such.LIST.length <= 0)
-            return such.onFinish();
+		run: function () {
+			if (such.LIST.length <= 0)
+				return such.onFinish();
 
-        if (such.options.lastInFirstOut)
-            such.LIST = such.LIST.reverse();
+			if (such.options.lastInFirstOut)
+				such.LIST = such.LIST.reverse();
 
-        if (such.options.async) {
-            such.asyncExecute();
-        } else {
-            such.syncExecute();
-        }
-    },
+			if (such.options.async) {
+				such.asyncExecute();
+			} else {
+				such.syncExecute();
+			}
+		},
 
-    asyncExecute: function () {
-        function execute(i) {
-            such.execute(i, function () {
-                if (!such.hasLastComplete())
-                    execute(++i);
-            });
-        };
+		asyncExecute: function () {
+			function execute(i) {
+				such.execute(i, function () {
+					if (!such.hasLastComplete())
+						execute(++i);
+				});
+			};
 
-        execute(0);
-    },
+			execute(0);
+		},
 
-    syncExecute: function () {
-        $foreach(such.LIST, function (obj, i) {
-            such.execute(i, function () {
-                such.hasLastComplete();
-            });
-        });
-    },
+		syncExecute: function () {
+			$foreach(such.LIST, function (obj, i) {
+				such.execute(i, function () {
+					such.hasLastComplete();
+				});
+			});
+		},
 
-    execute: function (id, callback) {
-        if (!such.LIST[id])
-            return;
+		execute: function (id, callback) {
+			if (!such.LIST[id])
+				return;
 
-        such.LIST[id].executed = true;
-        such.LIST[id].fn.apply(such.LIST[id].fn, [function () {
-            such.onComplete(id);
+			such.LIST[id].executed = true;
+			such.LIST[id].fn.apply(such.LIST[id].fn, [function () {
+				such.onComplete(id);
 
-            if (callback)
-                callback();
-        }, id])
-    },
+				if (callback)
+					callback();
+			}, id])
+		},
 
-    onComplete: function (id) {
-        if (!such.LIST[id] || !such.LIST[id].executed)
-            return;
+		onComplete: function (id) {
+			if (!such.LIST[id] || !such.LIST[id].executed)
+				return;
 
-        such.LIST[id].complete = true;
+			such.LIST[id].complete = true;
 
-        return such.options.onComplete(id);
-    },
+			return such.options.onComplete(id);
+		},
 
-    hasLastComplete: function () {
-        var finish = true;
+		hasLastComplete: function () {
+			var finish = true;
 
-        $foreach(such.LIST, function (obj, i) {
-            finish = finish && obj.complete;
-        });
+			$foreach(such.LIST, function (obj, i) {
+				finish = finish && obj.complete;
+			});
 
-        if (finish && !such.FINISHED){
-        	such.FINISHED = true;
-            such.onFinish();
-        }
+			if (finish && !such.FINISHED){
+				such.FINISHED = true;
+				such.onFinish();
+			}
 
-        return finish;
-    },
+			return finish;
+		},
 
-    onFinish: function () {
-        return such.options.onFinish();
-    }
+		onFinish: function () {
+			return such.options.onFinish();
+		}
+	});
 });
