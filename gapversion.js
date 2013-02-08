@@ -153,14 +153,17 @@
 					
 				var fileName = tratament.pop();
 				var filePath = tratament.join('/');
+					filePath = filePath + ((filePath != '' && filePath.charAt(filePath.length-1) != '/') ? '/' : '');
 				
 				such.getFile('Assets/' + filePath + fileName, function(fileEntry){
-					alert('encontrou arquivo');
+					fileEntry.getMetadata(function(metadata){
+						alert(metadata.modificationTime + '\n' + (new Date(metadata.modificationTime).getTime()));
+					})
 				}, function(e){
 					
 						such.errorHandler('nao encontrou arquivo', e);
 						
-						such.downloadFile(such.UPDATES.version.toFixed(1) + '/' + filePath + ((filePath != '' && filePath.charAt(filePath.length-1) != '/') ? '/' : '') + fileName, 'Assets/' + filePath, function(fileEntry){
+						such.downloadFile(such.UPDATES.version.toFixed(1) + '/' + filePath + fileName, 'Assets/' + filePath, function(fileEntry){
 							alert('saved file');
 						}, function(e){
 							such.errorHandler('nao baixou arquivo', e);
@@ -215,7 +218,7 @@
 					if(file[0] != '' && file[1] != '')
 					output.files.push({
 						name: file[0],
-						timestamp: file[1]
+						timestamp: new Date(file[1])
 					});
 				}
 			}
