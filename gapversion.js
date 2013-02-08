@@ -160,7 +160,7 @@
 					
 						such.errorHandler('nao encontrou arquivo', e);
 						
-						such.downloadFile(filePath + fileName, 'Assets/' + filePath, function(fileEntry){
+						such.downloadFile(filePath + such.VERSION + '/' + fileName, 'Assets/' + filePath, function(fileEntry){
 							alert('saved file');
 						}, function(e){
 							such.errorHandler('nao baixou arquivo', e);
