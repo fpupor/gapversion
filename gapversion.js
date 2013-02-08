@@ -249,7 +249,7 @@
 					if(file[0] != '' && file[1] != ''){
 						output.files.push({
 							name: file[0],
-							timestamp: new Date(file[1])
+							timestamp: new Date(parseFloat(file[1]))
 						});
 						
 						alert(file[1]+'\n'+(new Date(file[1])).getTime());
