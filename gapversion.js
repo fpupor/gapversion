@@ -89,11 +89,21 @@
 			});
 		},
 		
-		getDirectory: function(dirName, callback, fail, create){
-			such.FILESYSTEM.getDirectory(dirName, {
+		getDirectory: function(dirName, callback, fail, create, dirRoot){
+			var dirList = dirName.split('/');
+			
+			if(!dirRoot)
+				var dirRoot = such.FILESYSTEM;
+		
+			dirRoot.getDirectory(dirList.shift(), {
 				create: create,
 				exclusive: false
-			}, callback, fail)
+			}, function(dirEntry){
+				if(dirList.length > 0)
+					such.getDirectory(dirList.join('/'), callback, fail, create, dirEntry);
+				else
+					callback(dirEntry);
+			}, fail)
 		},
 		
 		getFile: function(fileName, callback, fail, create){
