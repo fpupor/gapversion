@@ -91,19 +91,25 @@
 		
 		getDirectory: function(dirName, callback, fail, create, dirRoot){
 			var dirList = dirName.split('/');
-			
+			var dirNow = dirList.shift();
 			if(!dirRoot)
 				var dirRoot = such.FILESYSTEM;
+			
 		
-			dirRoot.getDirectory(dirList.shift(), {
-				create: create,
-				exclusive: false
-			}, function(dirEntry){
-				if(dirList.length > 0)
-					such.getDirectory(dirList.join('/'), callback, fail, create, dirEntry);
-				else
-					callback(dirEntry);
-			}, fail)
+			if(dirNow != ''){
+				dirRoot.getDirectory(dirNow, {
+					create: create,
+					exclusive: false
+				}, function(dirEntry){
+					if(dirList.length > 0)
+						such.getDirectory(dirList.join('/'), callback, fail, create, dirEntry);
+					else
+						callback(dirEntry);
+				}, fail);
+			}else{
+				callback(dirRoot);
+			}
+			
 		},
 		
 		getFile: function(fileName, callback, fail, create){
@@ -118,7 +124,6 @@
 			
 			var tratament = (filePathAndName).split('/');
 			var fileName = tratament.pop();
-			var filePath = tratament.reverse().join('/');
 			var uri = encodeURI(such.options.SERVER + filePathAndName);
 		
 			alert(fileName+'\n'+dirName+'\n'+uri);
