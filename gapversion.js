@@ -149,10 +149,10 @@
 			var updates = such.UPDATES.files;
 			
 			for(var u = 0; u < updates.length; u++){
-				var tratament = (updates[u].name).split('/').reverse();
+				var tratament = (updates[u].name).split('/');
 					
 				var fileName = tratament.pop();
-				var filePath = tratament.reverse().join('/');
+				var filePath = tratament.join('/');
 				
 				such.getFile('Assets/' + filePath + fileName, function(fileEntry){
 					alert('encontrou arquivo');
