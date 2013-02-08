@@ -160,7 +160,7 @@
 					
 						such.errorHandler('nao encontrou arquivo', e);
 						
-						such.downloadFile(such.UPDATES.version.toFixed(1) + '/' +filePath + (filePath.charAt(filePath.length) != '/' ? '/' : '') + fileName, 'Assets/' + filePath, function(fileEntry){
+						such.downloadFile(such.UPDATES.version.toFixed(1) + '/' +filePath + (filePath.charAt(filePath.length-1) != '/' ? '/' : '') + fileName, 'Assets/' + filePath, function(fileEntry){
 							alert('saved file');
 						}, function(e){
 							such.errorHandler('nao baixou arquivo', e);
@@ -212,6 +212,7 @@
 				var file = lines[l].split('#');
 				
 				if(file.length > 0){
+					if(file[0] != '' && file[1] != '')
 					output.files.push({
 						name: file[0],
 						timestamp: file[1]
