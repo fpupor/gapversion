@@ -73,11 +73,7 @@
 					such.VERSION = parseFloat(file.target.result);
 					
 					if(such.VERSION == NaN){
-						fileEntry.createWriter(function(writer){
-							writer.write("0");
-						});
-						
-						such.VERSION = 0;
+						such.setVersion(0, fileEntry);
 					}
 					
 					callback(such.VERSION);
@@ -87,6 +83,25 @@
 			}, function(){
 				such.errorHandler('get user version', e);
 			});
+		},
+		
+		setVersion: function(version, fileEntry){
+			if(fileEntry){
+				such.VERSION = version;
+				
+				fileEntry.createWriter(function(writer){
+					writer.write(version + '');
+				, function(e){
+					such.errorHandler('set version', e);
+				}});
+			}else{
+				such.FILESYSTEM.getFile("version.txt", {
+					create: true, 
+					exclusive: false
+				}, function(fileEntry){
+					such.setVersion(version, fileEntry);
+				});
+			}
 		},
 		
 		getDirectory: function(dirName, callback, fail, create, dirRoot){
@@ -212,6 +227,7 @@
 		},
 		
 		updateComplete: function(id){
+			such.setVersion(such.UPDATES.version);
 			such.options.onUpdateComplete();
 		},
 		
@@ -271,6 +287,16 @@
 			}
 			
 			return output;
+		},
+		
+		_error: function(e){
+			try{
+				such.errorHandler('class error', e);
+			}catch(er){
+				alert('crash');
+				return false;
+			}
+			return false;
 		}
 	},{
 		defaults:{
