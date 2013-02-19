@@ -174,12 +174,16 @@
 					alert('success ' + fileEntry.fullPath);
 					
 					fileEntry.getMetadata(function(metadata){
-						alert('show metadata');
-						var nowFileDate = new Date(metadata.modificationTime);
+						alert('show metadata ' + metadata.modificationTime);
 						
-						
-						if(nowFileDate.getTime() < fileDate.getTime()){
-							such.updateFile(uriPath, localPath);
+						try{
+							var nowFileDate = new Date(metadata.modificationTime);
+							
+							if(nowFileDate.getTime() < fileDate.getTime()){
+								such.updateFile(uriPath, localPath);
+						}
+						}catch(e){
+							such.errorHandler('error getMetadata create date' , e);
 						}
 						
 						alert('test file\n'+uriPath+'\n'+nowFileDate.getTime()+'\n'+fileDate.getTime());
