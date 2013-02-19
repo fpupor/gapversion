@@ -168,6 +168,8 @@
 				var uriPath = such.UPDATES.version.toFixed(1) + '/' + filePath + fileName;
 				var localPath = 'Assets/' + filePath;
 				
+				alert('get file ' + fileName);
+				
 				such.getFile('Assets/' + filePath + fileName, function(fileEntry){
 					fileEntry.getMetadata(function(metadata){
 						var nowFileDate = new Date(metadata.modificationTime);
@@ -179,6 +181,7 @@
 						}
 					})
 				}, function(e){
+					alert('error check file');
 					such.updateFile(uriPath, localPath);
 				});
 			}
