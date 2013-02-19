@@ -187,7 +187,8 @@
 						
 						if(nowFileDate.getTime() < fileDate.getTime())
 							such.updateFile(uriPath, localPath);
-							
+						
+						such.DEBUG.info(fileEntry.name + ' ' + nowFileDate.getTime() + ':' fileDate.getTime());
 					}, function(){
 						such.errorHandler('error getMetadata' , e);
 					});
@@ -206,14 +207,15 @@
 		updateFile: function(uriPath, localPath){
 			such.UPDATES.chain.add(function(complete){
 				such.downloadFile(uriPath, localPath, function(fileEntry){
+					such.DEBUG.info('update complete: '+localPath);
 					complete();
 				}, function(e){
 					such.errorHandler('nao baixou arquivo\n'+uriPath, e);
 					complete();
 				}, function(e){
-					//if (e.lengthComputable) {
+					if (e.lengthComputable) {
 						such.updateFileProgress(fileEntry, (e.loaded / e.total) * 100);
-					//}
+					}
 				});
 			});
 		},
