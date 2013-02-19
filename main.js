@@ -12,7 +12,7 @@ deviceready.push(function(){
 		onReady: function(){
 			MyApp.DEBUG.info('app ok');
 			alert(MyApp.FILESYSTEM.fullPath);
-			Loader.js(MyApp.FILESYSTEM.fullPath + 'Assets/js/init.js');
+			Loader.js(MyApp.FILESYSTEM.fullPath + '/Assets/js/init.js');
 		},
 		
 		onCheckVersion: function(newVersion){
