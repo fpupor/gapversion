@@ -22,7 +22,7 @@ deviceready.push(function(){
 		},
 		
 		onUpdateFileProgress: function(file, totalPercent){
-			document.getElementById('log').innerHTML = totalPercent;
+			document.getElementById('log').innerHTML = 'total p ' + totalPercent;
 		},
 		
 		onUpdateProgress: function(file, totalPercent){

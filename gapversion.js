@@ -134,8 +134,6 @@
 			var fileName = tratament.pop();
 			var uri = encodeURI(such.options.SERVER + filePathAndName);
 		
-			alert(fileName+'\n'+dirName+'\n'+uri);
-		
 			such.getDirectory(dirName, function(dirEntry){
 				fileTransfer.download(uri, dirEntry.fullPath + '/' + fileName, success, fail || such.fn);
 			}, fail || such.fn, true);
@@ -168,25 +166,12 @@
 				var uriPath = such.UPDATES.version.toFixed(1) + '/' + filePath + fileName;
 				var localPath = 'Assets/' + filePath;
 				
-				alert('get file ' + fileName);
-				
-				such.getFile('Assets/' + filePath + fileName, function(fileEntry){
-					alert('success ' + fileEntry.fullPath);
-					
+				such.getFile('Assets/' + filePath + fileName, function(fileEntry){					
 					fileEntry.getMetadata(function(metadata){
-						alert('show metadata ' + metadata.modificationTime);
+						var nowFileDate = new Date(metadata.modificationTime);
 						
-						try{
-							var nowFileDate = new Date(metadata.modificationTime);
-							
-							if(nowFileDate.getTime() < fileDate.getTime()){
-								such.updateFile(uriPath, localPath);
-						}
-						}catch(e){
-							such.errorHandler('error getMetadata create date' , e);
-						}
-						
-						alert('test file\n'+uriPath+'\n'+nowFileDate.getTime()+'\n'+fileDate.getTime());
+						if(nowFileDate.getTime() < fileDate.getTime()){
+							such.updateFile(uriPath, localPath);
 					}, function(){
 						such.errorHandler('error getMetadata' , e);
 					});
@@ -205,15 +190,14 @@
 		updateFile: function(uriPath, localPath){
 			such.UPDATES.chain.add(function(complete){
 				such.downloadFile(uriPath, localPath, function(fileEntry){
-					alert('saved file\n'+uriPath);
 					complete();
 				}, function(e){
 					such.errorHandler('nao baixou arquivo\n'+uriPath, e);
 					complete();
 				}, function(e){
-					if (e.lengthComputable) {
+					//if (e.lengthComputable) {
 						such.updateFileProgress(fileEntry, (e.loaded / e.total) * 100);
-					}
+					//}
 				});
 			});
 		},
