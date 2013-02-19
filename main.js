@@ -5,21 +5,21 @@ deviceready.push(function(){
 		ROOT: 'GapVersion',
 
 		onConstruct: function(){
-			document.addEventListener("online", such.online, false);
-			document.addEventListener("offline", such.offline, false);
+			document.addEventListener("online", MyApp.online, false);
+			document.addEventListener("offline", MyApp.offline, false);
 		},
 		
 		onReady: function(){
-			such.DEBUG.info('app ok');
-			alert(such.FILESYSTEM.fullPath);
-			Loader.js(such.FILESYSTEM.fullPath + 'Assets/js/init.js');
+			MyApp.DEBUG.info('app ok');
+			alert(MyApp.FILESYSTEM.fullPath);
+			Loader.js(MyApp.FILESYSTEM.fullPath + 'Assets/js/init.js');
 		},
 		
 		onCheckVersion: function(newVersion){
 			if(confirm('Novas atualizações foram encontradas.\nVoce deseja atualizar agora?')){
 				return true;
 			}else{
-				such.ready();
+				MyApp.ready();
 				return false;
 			}
 		},
@@ -39,7 +39,7 @@ deviceready.push(function(){
 		
 		onUpdateComplete: function(){
 			alert('Update Complete');
-			such.ready();
+			MyApp.ready();
 		},
 		
 		onUpdateError: function(){
