@@ -1,6 +1,7 @@
 ﻿deviceready.push(function(){
 	Chain = new Class({
 		LIST: [],
+		COMPLETES: [],
 		FINISHED: false,
 		
 		defaults: {
@@ -78,6 +79,7 @@
 				return;
 
 			such.LIST[id].complete = true;
+			such.COMPLETES[id] = true;
 
 			return such.options.onComplete(id);
 		},

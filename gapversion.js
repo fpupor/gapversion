@@ -119,8 +119,16 @@
 			}, callback, fail);
 		},
 		
-		downloadFile: function(filePathAndName, dirName, success, fail){
+		downloadFile: function(filePathAndName, dirName, success, fail, loading){
 			var fileTransfer = new FileTransfer();
+			
+			fileTransfer.onprogress = function(progressEvent) {
+				if (progressEvent.lengthComputable) {
+				  loading(true, progressEvent);
+				} else {
+				  loading(false);
+				}
+			};
 			
 			var tratament = (filePathAndName).split('/');
 			var fileName = tratament.pop();
@@ -189,12 +197,20 @@
 				}, function(e){
 					such.errorHandler('nao baixou arquivo', e);
 					complete();
+				}, function(e){
+					if (e.lengthComputable) {
+						such.updateFileProgress(fileEntry, (e.loaded / e.total) * 100);
+					}
 				});
 			});
 		},
 		
+		updateFileProgress: function(fileEntry, percent){
+			such.options.onUpdateFileProgress(fileEntry, percent);
+		},
+		
 		updateProgress: function(id){
-			such.options.onUpdateProgress();
+			such.options.onUpdateProgress(id, (caller.LIST.length / caller.COMPLETES.length) * 100);
 		},
 		
 		updateComplete: function(id){
@@ -236,6 +252,7 @@
 			var lines = txt.split('\n');
 			var output = {
 				chain: new Chain({
+					onComplete: such.updateProgress,
 					onFinish: such.updateComplete
 				}),
 				version: parseFloat(lines[0]) || 0,
@@ -269,6 +286,7 @@
 			onReady: function(){},
 			onCheckVersion: function(){},
 			onUpdateVersion: function(){},
+			onUpdateFileProgress: function(){},
 			onUpdateProgress: function(){},
 			onUpdateComplete: function(){},
 			onUpdateError: function(){},

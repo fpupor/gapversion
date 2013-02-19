@@ -21,7 +21,12 @@ deviceready.push(function(){
 			alert('Update Start');
 		},
 		
+		onUpdateFileProgress: function(file, totalPercent){
+			document.getElementById('log').innerHTML = totalPercent;
+		},
+		
 		onUpdateProgress: function(file, totalPercent){
+			document.getElementById('log').innerHTML = '';
 			alert('Update Progress');
 		},
 		
