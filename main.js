@@ -11,6 +11,8 @@ deviceready.push(function(){
 		
 		onReady: function(){
 			such.DEBUG.info('app ok');
+			alert(such.FILESYSTEM.fullPath);
+			Loader.js(such.FILESYSTEM.fullPath + 'Assets/js/init.js');
 		},
 		
 		onCheckVersion: function(newVersion){
