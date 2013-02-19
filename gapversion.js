@@ -163,7 +163,7 @@
 				var filePath = tratament.join('/');
 					filePath = filePath + ((filePath != '' && filePath.charAt(filePath.length-1) != '/') ? '/' : '');
 					
-				var fileDate = updates[u].name;
+				var fileDate = updates[u].timestamp;
 				
 				var uriPath = such.UPDATES.version.toFixed(1) + '/' + filePath + fileName;
 				var localPath = 'Assets/' + filePath;
