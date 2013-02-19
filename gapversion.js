@@ -170,8 +170,9 @@
 					fileEntry.getMetadata(function(metadata){
 						var nowFileDate = new Date(metadata.modificationTime);
 						
-						if(nowFileDate.getTime() < fileDate.getTime()){
+						if(nowFileDate.getTime() < fileDate.getTime())
 							such.updateFile(uriPath, localPath);
+							
 					}, function(){
 						such.errorHandler('error getMetadata' , e);
 					});
@@ -195,9 +196,9 @@
 					such.errorHandler('nao baixou arquivo\n'+uriPath, e);
 					complete();
 				}, function(e){
-					if (e.lengthComputable) {
+					//if (e.lengthComputable) {
 						such.updateFileProgress(fileEntry, (e.loaded / e.total) * 100);
-					}
+					//}
 				});
 			});
 		},
