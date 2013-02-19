@@ -91,9 +91,9 @@
 				
 				fileEntry.createWriter(function(writer){
 					writer.write(version + '');
-				, function(e){
+				}, function(e){
 					such.errorHandler('set version', e);
-				}});
+				});
 			}else{
 				such.FILESYSTEM.getFile("version.txt", {
 					create: true, 
