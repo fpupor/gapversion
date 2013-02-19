@@ -180,9 +180,10 @@
 						if(nowFileDate.getTime() < fileDate.getTime()){
 							such.updateFile(uriPath, localPath);
 						}
-					})
+					}, function(){
+						such.errorHandler('error getMetadata' , e);
+					});
 				}, function(e){
-					alert('error check file');
 					such.updateFile(uriPath, localPath);
 				});
 			}
