@@ -166,14 +166,15 @@
 				var fileDate = updates[u].name;
 				
 				var uriPath = such.UPDATES.version.toFixed(1) + '/' + filePath + fileName;
-				var localPath = 'Temp/' + filePath;
+				var localPath = 'Assets/' + filePath;
 				
 				such.getFile('Assets/' + filePath + fileName, function(fileEntry){
 					fileEntry.getMetadata(function(metadata){
 						var nowFileDate = new Date(metadata.modificationTime);
 						
+						alert('test file\n'+uriPath+'\n'+nowFileDate.getTime()+'\n'+fileDate.getTime());
+						
 						if(nowFileDate.getTime() < fileDate.getTime()){
-							alert('update\n'+uriPath);
 							such.updateFile(uriPath, localPath);
 						}
 					})
@@ -192,10 +193,10 @@
 		updateFile: function(uriPath, localPath){
 			such.UPDATES.chain.add(function(complete){
 				such.downloadFile(uriPath, localPath, function(fileEntry){
-					alert('saved file');
+					alert('saved file\n'+uriPath);
 					complete();
 				}, function(e){
-					such.errorHandler('nao baixou arquivo', e);
+					such.errorHandler('nao baixou arquivo\n'+uriPath, e);
 					complete();
 				}, function(e){
 					if (e.lengthComputable) {
@@ -268,8 +269,6 @@
 							name: file[0],
 							timestamp: new Date(parseFloat(file[1]))
 						});
-						
-						alert(file[1]+'\n'+(new Date(parseFloat(file[1]))).getTime());
 					}
 				}
 			}
