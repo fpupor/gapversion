@@ -166,7 +166,7 @@
 				var fileDate = updates[u].name;
 				
 				var uriPath = such.UPDATES.version.toFixed(1) + '/' + filePath + fileName;
-				var localPath = 'Assets/' + filePath;
+				var localPath = 'Temp/' + filePath;
 				
 				such.getFile('Assets/' + filePath + fileName, function(fileEntry){
 					fileEntry.getMetadata(function(metadata){
