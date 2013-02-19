@@ -171,10 +171,11 @@
 				alert('get file ' + fileName);
 				
 				such.getFile('Assets/' + filePath + fileName, function(fileEntry){
+					alert('success');
 					fileEntry.getMetadata(function(metadata){
+						alert('test file\n'+uriPath+'\n'+nowFileDate.getTime()+'\n'+fileDate.getTime());
 						var nowFileDate = new Date(metadata.modificationTime);
 						
-						alert('test file\n'+uriPath+'\n'+nowFileDate.getTime()+'\n'+fileDate.getTime());
 						
 						if(nowFileDate.getTime() < fileDate.getTime()){
 							such.updateFile(uriPath, localPath);
