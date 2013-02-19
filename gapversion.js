@@ -171,8 +171,10 @@
 				alert('get file ' + fileName);
 				
 				such.getFile('Assets/' + filePath + fileName, function(fileEntry){
-					alert('success');
+					alert('success ' + fileEntry.fullPath);
+					
 					fileEntry.getMetadata(function(metadata){
+						alert('show metadata');
 						var nowFileDate = new Date(metadata.modificationTime);
 						
 						
