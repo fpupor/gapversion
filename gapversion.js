@@ -195,9 +195,9 @@
 					such.errorHandler('nao baixou arquivo\n'+uriPath, e);
 					complete();
 				}, function(e){
-					//if (e.lengthComputable) {
+					if (e.lengthComputable) {
 						such.updateFileProgress(fileEntry, (e.loaded / e.total) * 100);
-					//}
+					}
 				});
 			});
 		},
