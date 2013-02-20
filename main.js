@@ -10,9 +10,19 @@ deviceready.push(function(){
 		},
 		
 		onReady: function(){
-			MyApp.DEBUG.info('app ok');
-			alert(MyApp.FILESYSTEM.fullPath);
-			Loader.js(MyApp.FILESYSTEM.fullPath + '/Assets/js/init.js');
+			MyApp.DEBUG.info('app ready');
+			
+			Loader.js(MyApp.FILESYSTEM.fullPath + '/Assets/js/init.js', function(){
+				MyApp.DEBUG.info('init.js include');
+			}, function(e){
+				MyApp.errorHandler('init.js include', e);
+			});
+			
+			Loader.css(MyApp.FILESYSTEM.fullPath + '/Assets/css/style.css', function(){
+				MyApp.DEBUG.info('style.css include');
+			}, function(e){
+				MyApp.errorHandler('style.css include', e);
+			});
 		},
 		
 		onCheckVersion: function(newVersion){
