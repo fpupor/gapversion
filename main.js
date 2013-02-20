@@ -39,12 +39,12 @@ deviceready.push(function(){
 		},
 		
 		onUpdateFileProgress: function(file, totalPercent){
-			document.getElementById('log').innerHTML = 'total p ' + totalPercent;
+			//document.getElementById('log').innerHTML = 'total p ' + totalPercent;
 		},
 		
 		onUpdateProgress: function(file, totalPercent){
-			document.getElementById('log').innerHTML = '';
-			alert('Update Progress');
+			//document.getElementById('log').innerHTML = '';
+			//alert('Update Progress');
 		},
 		
 		onUpdateComplete: function(){
@@ -52,7 +52,7 @@ deviceready.push(function(){
 			MyApp.ready();
 		},
 		
-		onUpdateError: function(){
+		onUpdateError: function(ers){
 			alert('Update Error');
 		},
 		

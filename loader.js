@@ -74,7 +74,6 @@ deviceready.push(function(){
 			obj.type = 'text/css';
 
 			try {
-
 				obj.addEvent('error', error);
 
 				obj.href = url;

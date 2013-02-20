@@ -211,6 +211,7 @@
 					complete();
 				}, function(e){
 					such.errorHandler('nao baixou arquivo\n'+uriPath, e);
+					such.UPDATES.error.push(e);
 					complete();
 				}, function(e){
 					if (e.lengthComputable) {
@@ -229,8 +230,12 @@
 		},
 		
 		updateComplete: function(id){
-			such.setVersion(such.UPDATES.version);
-			such.options.onUpdateComplete();
+			if(such.UPDATES.error.length > 0){
+				such.options.onUpdateError(such.UPDATES.error);
+			}else{
+				such.setVersion(such.UPDATES.version);
+				such.options.onUpdateComplete();
+			}
 		},
 		
 		checkVersion: function(){
@@ -272,7 +277,8 @@
 					onFinish: such.updateComplete
 				}),
 				version: parseFloat(lines[0]) || 0,
-				files:[]
+				files:[],
+				error:[]
 			};
 			
 			for(var l = 1; l < lines.length; l++){
