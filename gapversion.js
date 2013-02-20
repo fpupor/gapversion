@@ -188,7 +188,7 @@
 						if(nowFileDate.getTime() < fileDate.getTime())
 							such.updateFile(uriPath, localPath);
 						
-						such.DEBUG.info(fileEntry.name + ' ' + nowFileDate.getTime() + ':' fileDate.getTime());
+						such.DEBUG.info(fileEntry.name + ' ' + nowFileDate.getTime() + ':' + fileDate.getTime());
 					}, function(){
 						such.errorHandler('error getMetadata' , e);
 					});
