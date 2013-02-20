@@ -251,7 +251,7 @@
 					such.DEBUG.info('open file version');
 					such.UPDATES = such.parseProtocol(file.target.result);
 					
-					if(such.VERSION == NaN || such.VERSION == 0 || such.options.onCheckVersion(such.UPDATES.version > such.VERSION))
+					if(such.options.onCheckVersion(such.VERSION == NaN || such.VERSION == 0 || such.UPDATES.version > such.VERSION))
 						such.updateVersion();
 				}, function(e){
 					such.errorHandler('open file version' , e);
