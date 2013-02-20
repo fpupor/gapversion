@@ -251,7 +251,7 @@
 					such.DEBUG.info('open file version');
 					such.UPDATES = such.parseProtocol(file.target.result);
 					
-					var updateNow = such.VERSION == NaN || such.VERSION == 0 || such.UPDATES.version > such.VERSION;
+					var updateNow = !such.VERSION || such.VERSION == NaN || such.VERSION == 'NaN' || such.UPDATES.version > such.VERSION;
 					such.DEBUG.info('open file version '+updateNow+' last:'+ such.VERSION + ' new:' + such.UPDATES.version);
 					
 					if(such.options.onCheckVersion(updateNow))
