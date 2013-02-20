@@ -16,7 +16,7 @@ deviceready.push(function(){
 		},
 		
 		onCheckVersion: function(newVersion){
-			if(confirm('Novas atualizações foram encontradas.\nVoce deseja atualizar agora?')){
+			if(newVersion && confirm('Novas atualizações foram encontradas.\nVoce deseja atualizar agora?')){
 				return true;
 			}else{
 				MyApp.ready();
