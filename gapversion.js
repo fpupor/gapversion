@@ -239,20 +239,25 @@
 		},
 		
 		checkVersion: function(){
-			if(!such.ONLINE)
+			if(!such.ONLINE){
+				if(such.VERSION && such.VERSION > 0)
+					such.ready();
+					
 				return such.DEBUG.info('offline to check version') && false;
+			}
 				
-			such.DEBUG.info('check version');
+			such.DEBUG.info('check server version');
 			
 			such.downloadFile(such.options.SYSTEM, "Temp", function(fileEntry){
 				such.DEBUG.info('download file version');
 				
 				such.openFile(fileEntry, function(file){
-					such.DEBUG.info('open file version');
+					
 					such.UPDATES = such.parseProtocol(file.target.result);
 					
 					var updateNow = !such.VERSION || such.VERSION == NaN || such.VERSION == 'NaN' || such.UPDATES.version > such.VERSION;
-					such.DEBUG.info('open file version '+updateNow+' last:'+ such.VERSION + ' new:' + such.UPDATES.version);
+					
+					such.DEBUG.info('compare version '+updateNow+' last:'+ such.VERSION + ' new:' + such.UPDATES.version);
 					
 					if(such.options.onCheckVersion(updateNow))
 						such.updateVersion();
