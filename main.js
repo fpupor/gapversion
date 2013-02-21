@@ -12,14 +12,30 @@ deviceready.push(function(){
 		onReady: function(){
 			MyApp.DEBUG.info('app ready');
 			
-			Loader.js(MyApp.FILESYSTEM.fullPath + '/Assets/js/init.js', function(){
-				MyApp.DEBUG.info('init.js include');
-			}, function(e){
-				MyApp.errorHandler('init.js include', e);
-			});
-			
 			Loader.css(MyApp.FILESYSTEM.fullPath + '/Assets/css/style.css', function(){
 				MyApp.DEBUG.info('style.css include');
+				
+				
+				MyApp.getFile("/Assets/content.html", function(fileEntry){
+					MyApp.DEBUG.info('open content html');
+					
+					MyApp.openFile(fileEntry, function(file){
+						document.getElementById('body').innerHTML = file.target.result;
+						
+						Loader.js(MyApp.FILESYSTEM.fullPath + '/Assets/js/init.js', function(){
+							MyApp.DEBUG.info('init.js include');
+						}, function(e){
+							MyApp.errorHandler('init.js include', e);
+						});
+						
+					}, function(e){
+						such.errorHandler('error content html', e);
+					})
+				}, function(){
+					such.errorHandler('get user version', e);
+				});
+				
+				
 			}, function(e){
 				MyApp.errorHandler('style.css include', e);
 			});

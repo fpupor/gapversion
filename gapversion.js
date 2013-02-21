@@ -241,7 +241,7 @@
 		checkVersion: function(){
 			if(!such.ONLINE){
 				if(such.VERSION && such.VERSION > 0)
-					such.ready();
+					setTimeout(such.ready, 500);
 					
 				return such.DEBUG.info('offline to check version') && false;
 			}
