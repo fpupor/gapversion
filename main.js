@@ -16,10 +16,12 @@ deviceready.push(function(){
 				MyApp.DEBUG.info('style.css include');
 				
 				
-				MyApp.getFile("/Assets/content.html", function(fileEntry){
-					MyApp.DEBUG.info('open content html');
+				MyApp.getFile("Assets/content.html", function(fileEntry){
+					MyApp.DEBUG.info('get content html');
 					
 					MyApp.openFile(fileEntry, function(file){
+						MyApp.DEBUG.info('open content html');
+						
 						document.getElementById('body').innerHTML = file.target.result;
 						
 						Loader.js(MyApp.FILESYSTEM.fullPath + '/Assets/js/init.js', function(){
@@ -29,10 +31,10 @@ deviceready.push(function(){
 						});
 						
 					}, function(e){
-						such.errorHandler('error content html', e);
+						such.errorHandler('error open content html', e);
 					})
 				}, function(){
-					such.errorHandler('get user version', e);
+					such.errorHandler('error get content html', e);
 				});
 				
 				
