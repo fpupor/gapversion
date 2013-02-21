@@ -182,16 +182,26 @@
 				var localPath = 'Assets/' + filePath;
 				
 				such.getFile('Assets/' + filePath + fileName, function(fileEntry){					
-					fileEntry.getMetadata(function(metadata){
-						var nowFileDate = new Date(metadata.modificationTime);
-						
-						if(nowFileDate.getTime() < fileDate.getTime())
-							such.updateFile(uriPath, localPath);
-						
-						such.DEBUG.info(fileEntry.name + ' ' + nowFileDate.getTime() + ':' + fileDate.getTime());
-					}, function(){
-						such.errorHandler('error getMetadata' , e);
-					});
+					if(fileDate){
+						fileEntry.getMetadata(function(metadata){
+							
+							var nowFileDate = new Date(metadata.modificationTime);
+							
+							if(nowFileDate.getTime() < fileDate.getTime())
+								such.updateFile(uriPath, localPath);
+							
+							such.DEBUG.info(fileEntry.name + ' ' + nowFileDate.getTime() + ':' + fileDate.getTime());
+							
+						}, function(){
+							such.errorHandler('error getMetadata' , e);
+						});
+					}else{
+						fileEntry.remove(function(){
+							such.DEBUG.info(fileEntry.name + ' deleted');
+						}, function(){
+							such.errorHandler('error remove file' , e);
+						});
+					}
 				}, function(e){
 					such.updateFile(uriPath, localPath);
 				});
@@ -296,7 +306,7 @@
 					if(file[0] != '' && file[1] != ''){
 						output.files.push({
 							name: file[0],
-							timestamp: new Date(parseFloat(file[1]))
+							timestamp: file[1] == '0' ? false : new Date(parseFloat(file[1]))
 						});
 					}
 				}
