@@ -236,7 +236,7 @@
 		},
 		
 		updateProgress: function(id){
-			such.options.onUpdateProgress(id, 0);//(caller.LIST.length / caller.COMPLETES.length) * 100
+			such.options.onUpdateProgress(id, (such.UPDATES.chain.LIST.length / such.UPDATES.chain.COMPLETES.length) * 100);
 		},
 		
 		updateComplete: function(id){

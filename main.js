@@ -57,11 +57,11 @@ deviceready.push(function(){
 		},
 		
 		onUpdateFileProgress: function(file, totalPercent){
-			//document.getElementById('log').innerHTML = 'total p ' + totalPercent;
+			document.getElementById('log').innerHTML = 'total fp ' + totalPercent;
 		},
 		
 		onUpdateProgress: function(file, totalPercent){
-			//document.getElementById('log').innerHTML = '';
+			document.getElementById('log').innerHTML = 'total up ' + totalPercent;
 			//alert('Update Progress');
 		},
 		
