@@ -31,10 +31,10 @@ deviceready.push(function(){
 						});
 						
 					}, function(e){
-						such.errorHandler('error open content html', e);
+						MyApp.errorHandler('error open content html', e);
 					})
 				}, function(){
-					such.errorHandler('error get content html', e);
+					MyApp.errorHandler('error get content html', e);
 				});
 				
 				
