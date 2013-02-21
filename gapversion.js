@@ -248,7 +248,7 @@
 			}
 		},
 		
-		checkVersion: function(){
+		checkVersion: function(force){
 			if(!such.ONLINE){
 				if(such.VERSION && such.VERSION > 0)
 					setTimeout(such.ready, 500);
@@ -269,7 +269,7 @@
 					
 					such.DEBUG.info('compare version '+updateNow+' last:'+ such.VERSION + ' new:' + such.UPDATES.version);
 					
-					if(such.options.onCheckVersion(updateNow))
+					if(force || such.options.onCheckVersion(updateNow))
 						such.updateVersion();
 				}, function(e){
 					such.errorHandler('open file version' , e);
