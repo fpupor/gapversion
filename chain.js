@@ -81,7 +81,7 @@
 			such.LIST[id].complete = true;
 			such.COMPLETES[id] = true;
 
-			return such.options.onComplete(id);
+			return such.options.onComplete.apply(such, [id]);
 		},
 
 		hasLastComplete: function () {
@@ -100,7 +100,7 @@
 		},
 
 		onFinish: function () {
-			return such.options.onFinish();
+			return such.options.onFinish.apply(such,[]);
 		}
 	});
 });
