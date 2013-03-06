@@ -128,10 +128,7 @@
 		},
 		
 		getFile: function(fileName, callback, fail, create){
-			if(fileName.search(/^\//) != -1)
-				fileName = "/" + fileName;
-		
-			such.DEBUG.info('get file ' + such.FILESYSTEM.fullPath + fileName);
+			such.DEBUG.info('get file ' + fileName);
 			such.FILESYSTEM.getFile(fileName, {
 				create: create,
 				exclusive: false
