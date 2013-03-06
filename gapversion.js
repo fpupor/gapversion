@@ -214,12 +214,15 @@
 		},
 		
 		updateStart: function(){
+			such.DEBUG.info('chain update run ' + such.UPDATES.chain.LIST.length);
 			such.UPDATES.chain.run();
 		},
 		
 		updateFile: function(uriPath, localPath){
+			such.DEBUG.info('update file ' + uriPath + ', ' + localPath);
 			such.UPDATES.chain.add(function(complete){
-				such.DEBUG.info('update file ' + uriPath);
+				such.DEBUG.info('start update file ' + uriPath);
+				
 				such.downloadFile(uriPath, localPath, function(fileEntry){
 					such.DEBUG.info('update complete: '+localPath);
 					complete();
