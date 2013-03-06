@@ -12,9 +12,10 @@ deviceready.push(function(){
 		onReady: function(){
 			MyApp.DEBUG.info('app ready');
 			
+			document.body.className = screen.width + 'x' + screen.height;
+			
 			Loader.css(MyApp.FILESYSTEM.fullPath + '/Assets/css/style.css', function(){
-				MyApp.DEBUG.info('style.css include');
-				
+				MyApp.DEBUG.info('style.css include');				
 				
 				MyApp.DEBUG.info('get content html');
 				MyApp.getFile("Assets/content.html", function(fileEntry){
