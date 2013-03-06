@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns = "http://www.w3.org/ns/widgets"
 	xmlns:gap= "http://phonegap.com/ns/1.0"
-	id= "br.com.wunderman.gapversion"
-	version= "0.0.3">
+	id= "S4ENTR4YMZ.br.com.wunderman.danone.monsapp"
+	version= "0.0.4">
 
 	<name>Gap Version</name> 
 
