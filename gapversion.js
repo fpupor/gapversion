@@ -170,47 +170,66 @@
 			
 			var updates = such.UPDATES.files;
 			
+			var getFilesChain = new Chain({
+				onFinish: such.updateStart,
+				async: true
+			});
+			
 			for(var u = 0; u < updates.length; u++){
-				var tratament = (updates[u].name).split('/');
+			
+				(function(updates, u){
+					var tratament = (updates[u].name).split('/');
+						
+					var fileName = tratament.pop();
+					var filePath = tratament.join('/');
+						filePath = filePath + ((filePath != '' && filePath.charAt(filePath.length-1) != '/') ? '/' : '');
+						
+					var fileDate = updates[u].timestamp;
 					
-				var fileName = tratament.pop();
-				var filePath = tratament.join('/');
-					filePath = filePath + ((filePath != '' && filePath.charAt(filePath.length-1) != '/') ? '/' : '');
+					var uriPath = such.UPDATES.version.toFixed(1) + '/' + filePath + fileName;
+					var localPath = 'Assets/' + filePath;
 					
-				var fileDate = updates[u].timestamp;
-				
-				var uriPath = such.UPDATES.version.toFixed(1) + '/' + filePath + fileName;
-				var localPath = 'Assets/' + filePath;
-				
-				such.getFile('Assets/' + filePath + fileName, function(fileEntry){
-					such.DEBUG.info('success get file');
 					
-					if(fileDate){
-						fileEntry.getMetadata(function(metadata){
+					getFilesChain.add(function(complete){
+						such.DEBUG.info('get file' + fileName);
+						
+						such.getFile('Assets/' + filePath + fileName, function(fileEntry){
+							such.DEBUG.info('success get file' + fileName);
 							
-							var nowFileDate = new Date(metadata.modificationTime);
-							
-							if(nowFileDate.getTime() < fileDate.getTime())
-								such.updateFile(uriPath, localPath);
-							
-							such.DEBUG.info(fileEntry.name + ' ' + nowFileDate.getTime() + ':' + fileDate.getTime());
-							
-						}, function(){
-							such.errorHandler('error getMetadata' , e);
+							if(fileDate){
+								fileEntry.getMetadata(function(metadata){
+									
+									var nowFileDate = new Date(metadata.modificationTime);
+									
+									if(nowFileDate.getTime() < fileDate.getTime())
+										such.updateFile(uriPath, localPath);
+									
+									such.DEBUG.info(fileEntry.name + ' ' + nowFileDate.getTime() + ':' + fileDate.getTime());
+									
+									complete();
+								}, function(){
+									such.errorHandler('error getMetadata' , e);
+									complete();
+								});
+							}else{
+								fileEntry.remove(function(){
+									such.DEBUG.info(fileEntry.name + ' deleted');
+									complete();
+								}, function(){
+									such.errorHandler('error remove file' , e);
+									complete();
+								});
+							}
+						}, function(e){
+							such.updateFile(uriPath, localPath);
+							complete();
 						});
-					}else{
-						fileEntry.remove(function(){
-							such.DEBUG.info(fileEntry.name + ' deleted');
-						}, function(){
-							such.errorHandler('error remove file' , e);
-						});
-					}
-				}, function(e){
-					such.updateFile(uriPath, localPath);
-				});
+					});
+				})(updates, u);
 			}
 			
-			such.updateStart();
+			getFilesChain.run();
+			
 		},
 		
 		updateStart: function(){
