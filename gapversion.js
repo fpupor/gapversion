@@ -128,6 +128,7 @@
 		},
 		
 		getFile: function(fileName, callback, fail, create){
+			such.DEBUG.info('get file ' + such.FILESYSTEM.fullPath + fileName);
 			such.FILESYSTEM.getFile(fileName, {
 				create: create,
 				exclusive: false
@@ -181,7 +182,9 @@
 				var uriPath = such.UPDATES.version.toFixed(1) + '/' + filePath + fileName;
 				var localPath = 'Assets/' + filePath;
 				
-				such.getFile('Assets/' + filePath + fileName, function(fileEntry){					
+				such.getFile('Assets/' + filePath + fileName, function(fileEntry){
+					such.DEBUG.info('success get file');
+					
 					if(fileDate){
 						fileEntry.getMetadata(function(metadata){
 							
@@ -216,6 +219,7 @@
 		
 		updateFile: function(uriPath, localPath){
 			such.UPDATES.chain.add(function(complete){
+				such.DEBUG.info('update file ' + uriPath);
 				such.downloadFile(uriPath, localPath, function(fileEntry){
 					such.DEBUG.info('update complete: '+localPath);
 					complete();
