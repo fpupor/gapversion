@@ -1,4 +1,6 @@
 deviceready.push(function(){
+	navigator.splashscreen.show();
+	
 	MyApp = new gapVersion({
 		SERVER: 'http://hml.conheca.me/gapversion/',
 		SYSTEM: 'system.php',
@@ -28,6 +30,7 @@ deviceready.push(function(){
 						
 						Loader.js(MyApp.FILESYSTEM.fullPath + '/Assets/js/init.js', function(){
 							MyApp.DEBUG.info('init.js include');
+							navigator.splashscreen.hide();
 						}, function(e){
 							MyApp.errorHandler('init.js include', e);
 						});
@@ -47,6 +50,7 @@ deviceready.push(function(){
 		
 		onCheckVersion: function(newVersion){
 			if(newVersion && confirm('Novas atualizações foram encontradas.\nVoce deseja atualizar agora?')){
+				navigator.splashscreen.hide();
 				return true;
 			}else{
 				MyApp.ready();
