@@ -299,6 +299,8 @@
 						such.updateVersion();
 				}, function(e){
 					such.errorHandler('open file version' , e);
+				}, function(){
+					
 				});
 			}, function(e){
 				such.errorHandler('download file version' , e);

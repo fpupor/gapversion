@@ -72,7 +72,7 @@ deviceready.push(function(){
 				break;
 								   
 			 case 4:
-				if (such.REQUEST.status == 200)
+				if (such.REQUEST.status == 200 || such.REQUEST.status === 0)
 				   such.onSuccess();
 				else
 				   such.onFailure();
