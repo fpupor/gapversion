@@ -31,4 +31,5 @@
 	
 	<access origin=".*" />
 	<access origin="http://hml.conheca.me" />
+	<access origin="http://www3.hmlwunderman.com.br" />
 </widget>
