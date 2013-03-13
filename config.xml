@@ -2,12 +2,12 @@
 <widget xmlns = "http://www.w3.org/ns/widgets"
 	xmlns:gap= "http://phonegap.com/ns/1.0"
 	id= "S4ENTR4YMZ.br.com.wunderman.danone.monsapp"
-	version= "0.0.5">
+	version= "0.0.6">
 
-	<name>Gap Version</name> 
+	<name>Moms App</name> 
 
 	<description>
-		Controle de versao
+		Aplicativo para crianças
 	</description>
 
 	<author href="https://github.com/fpupor"
@@ -19,9 +19,21 @@
 		<gap:platform name="ios"/>
 	</gap:platforms>
 
+	<preference name="phonegap-version" value="2.3.0" />
+	<preference name="target-device" value="handset" />
 	<preference name="orientation" value="portrait" />
 	<preference name="fullscreen" value="true" />
 	<preference name="webviewbounce" value="false" />
+	<preference name="disable-cursor" value="true" />
+	<preference name="auto-hide-splash-screen" value="false" />
+	
+	
+	<gap:splash src="splash/ios/Default.png" width="320" height="480" />
+	<gap:splash src="splash/ios/Default_at_2x.png" width="640" height="960" />
+	<gap:splash src="splash/ios/Default_iphone5.png" width="640" height="1136" />
+	<gap:splash src="splash/ios/Default-Landscape.png" width="1024" height="768" />
+	<gap:splash src="splash/ios/Default-Portrait.png" width="768" height="1024" />
+	
 	
 	<feature name="http://api.phonegap.com/1.0/network"/>
 	<feature name="http://api.phonegap.com/1.0/battery"/>
@@ -29,7 +41,5 @@
 	<feature name="http://api.phonegap.com/1.0/file"/>
 	<feature name="http://api.phonegap.com/1.0/notification"/>
 	
-	<access origin=".*" />
-	<access origin="http://hml.conheca.me" />
-	<access origin="http://www3.hmlwunderman.com.br" />
+	<access origin="*" />
 </widget>
