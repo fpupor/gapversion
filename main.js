@@ -1,5 +1,4 @@
 deviceready.push(function(){
-	navigator.splashscreen.hide();
 	
 	MyApp = new gapVersion({
 		SERVER: 'http://hml.conheca.me/gapversion/',
@@ -62,7 +61,7 @@ deviceready.push(function(){
 						MyApp.ready();
 						return false;
 					}
-				});
+				//});
 			}else{
 				alert('no version');
 				MyApp.ready();
