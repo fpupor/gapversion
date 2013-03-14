@@ -1,6 +1,5 @@
 deviceready.push(function(){
 	document.body.className = 'r' + screen.width + 'x' + screen.height;
-	navigator.splashscreen.hide();
 	
 	MyApp = new gapVersion({
 		SERVER: 'http://hml.conheca.me/gapversion/',
@@ -16,8 +15,6 @@ deviceready.push(function(){
 		onReady: function(){
 			MyApp.DEBUG.info('app ready');
 			
-			document.body.className = 'r' + screen.width + 'x' + screen.height;
-			
 			Loader.css(MyApp.FILESYSTEM.fullPath + '/Assets/css/style.css', function(){
 				MyApp.DEBUG.info('style.css include');				
 				
@@ -32,6 +29,8 @@ deviceready.push(function(){
 						
 						Loader.js(MyApp.FILESYSTEM.fullPath + '/Assets/js/init.js', function(){
 							MyApp.DEBUG.info('init.js include');
+							
+							navigator.splashscreen.hide();
 							
 							if(MyApp.MESSAGE)
 								MyApp.MESSAGE.hide();
@@ -55,13 +54,13 @@ deviceready.push(function(){
 		
 		onCheckVersion: function(newVersion){
 			if(newVersion){
+				navigator.splashscreen.hide();
+				
 				confirm('Novas atualizações foram encontradas.\nVoce deseja atualizar agora?', function(response){
 					if(response){
 						MyApp.updateVersion();
-						return true;
 					}else{
 						MyApp.ready();
-						return false;
 					}
 				});
 			}else{
@@ -71,24 +70,30 @@ deviceready.push(function(){
 		},
 		
 		onUpdateVersion: function(){
-			MyApp.MESSAGE = message('Aguarde estamos baixando as novas atualizações.');				
+			MyApp.MESSAGE = message('Aguardando servidor...');				
 		},
 		
 		onUpdateFileProgress: function(file, totalPercent){
-			document.getElementById('log').innerHTML = 'total fp ' + totalPercent;
+			MyApp.MESSAGE.updateText('Baixando novas arquivos...');
 		},
 		
 		onUpdateProgress: function(file, totalPercent){
-			document.getElementById('log').innerHTML = 'total up ' + totalPercent;
+			MyApp.MESSAGE.updateText('Verificando arquivos desatualizados...');
 		},
 		
 		onUpdateComplete: function(){
-			MyApp.MESSAGE.updateText('Instalando as novas atualizações.');
-			MyApp.ready();
+			if(MyApp.MESSAGE)
+				MyApp.MESSAGE.hide();
+			
+			alert('As atualizações foram concluidas com sucesso!', function(){
+				MyApp.ready();
+			});
 		},
 		
 		onUpdateError: function(ers){
-			alert('Não foi possivel fazer as atualizações\nTente novamente mais tarde.');
+			alert('Não foi possivel concluir as atualizações\nTente novamente mais tarde.', function(){
+				MyApp.ready();
+			});
 		},
 		
 		onErrorHandler: function(e){

@@ -9,7 +9,7 @@ deviceready.push(function(){
 		
 		construct: function(options){
 			such.options.message =  such.options.message + '';
-			such.BODY = document.getElementById('body');
+			such.BODY = document.body;
 			
 			such.createDefaults();
 			such.show();
