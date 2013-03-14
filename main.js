@@ -1,5 +1,5 @@
 deviceready.push(function(){
-	navigator.splashscreen.show();
+	navigator.splashscreen.hide();
 	
 	MyApp = new gapVersion({
 		SERVER: 'http://hml.conheca.me/gapversion/',
