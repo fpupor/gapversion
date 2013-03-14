@@ -5,7 +5,8 @@ deviceready.push(function(){
 		SERVER: 'http://hml.conheca.me/gapversion/',
 		SYSTEM: 'system.php',
 		ROOT: 'GapVersion',
-
+		MESSAGE: null,
+		
 		onConstruct: function(){
 			document.addEventListener("online", MyApp.online, false);
 			document.addEventListener("offline", MyApp.offline, false);
@@ -33,7 +34,7 @@ deviceready.push(function(){
 							
 							setTimeout(function(){
 								navigator.splashscreen.hide();
-							}, 600);
+							}, 1000);
 							
 						}, function(e){
 							MyApp.errorHandler('init.js include', e);
@@ -53,8 +54,14 @@ deviceready.push(function(){
 		},
 		
 		onCheckVersion: function(newVersion){
-			if(newVersion && confirm('Novas atualizações foram encontradas.\nVoce deseja atualizar agora?')){
-				return true;
+			if(newVersion){
+				confirm('Novas atualizações foram encontradas.\nVoce deseja atualizar agora?', function(response){
+					if(response){
+						MyApp.updateVersion();
+					}else{
+						MyApp.ready();
+					}
+				});
 			}else{
 				MyApp.ready();
 				return false;
@@ -62,7 +69,10 @@ deviceready.push(function(){
 		},
 		
 		onUpdateVersion: function(){
-			alert('Update Start');
+			var txt = 'Aguarde estamos baixando as novas atualizações.\nNão feche o aplicativo.';
+			if(!MyApp.MESSAGE)
+				MyApp.MESSAGE = message(txt);
+				
 		},
 		
 		onUpdateFileProgress: function(file, totalPercent){
@@ -75,12 +85,13 @@ deviceready.push(function(){
 		},
 		
 		onUpdateComplete: function(){
-			alert('Update Complete');
+			if(MyApp.MESSAGE)
+				MyApp.MESSAGE.hide();
 			MyApp.ready();
 		},
 		
 		onUpdateError: function(ers){
-			alert('Update Error');
+			alert('Não foi possivel fazer as atualizações\nTente novamente mais tarde.');
 		},
 		
 		onErrorHandler: function(e){

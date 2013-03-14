@@ -20,13 +20,14 @@ deviceready.push(function(){
 			such.GENERAL = document.createElement('div');
 			such.GENERAL.id = 'system-boxes-' + self.UID;
 			such.GENERAL.className = 'system-boxes-' + such.options.type;
+			such.GENERAL.style.visibility = 'hidden';
 			
 			such.BOX = document.createElement('div');
 			such.BOX.className = 'box';
 			
 			such.MESSAGE = document.createElement('p');
 			such.MESSAGE.className = 'message';
-			such.MESSAGE.innerText = such.options.message.replace(/\n/gim, '<br/>');
+			such.MESSAGE.innerHTML = such.options.message.replace(/\n/gim, '<br/>');
 			
 			such.BUTTONS = document.createElement('span');
 			such.BUTTONS.className = 'buttons';
@@ -54,6 +55,24 @@ deviceready.push(function(){
 			such.GENERAL.appendChild(such.BOX);
 			such.BOX.appendChild(such.MESSAGE);
 			such.BOX.appendChild(such.BUTTONS);
+			
+			such.centerBox();
+		},
+		
+		centerBox: function(){
+			such.BODY.appendChild(such.GENERAL);
+			
+			var totalHeight = such.GENERAL.offsetHeight;
+			var totalWidth = such.GENERAL.offsetWidth;
+			
+			var boxHeight = such.BOX.offsetHeight;
+			var boxWidth = such.BOX.offsetWidth;
+			
+			such.BOX.style.top = ((totalHeight / 2) - (boxHeight / 2)) + 'px';
+			such.BOX.style.left = ((totalWidth / 2) - (boxWidth / 2)) + 'px';
+			
+			such.GENERAL.parentNode.removeChild(such.GENERAL);
+			such.GENERAL.style.visibility = 'visible';
 		},
 		
 		show: function(){

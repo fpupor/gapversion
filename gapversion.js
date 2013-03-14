@@ -295,8 +295,10 @@
 					
 					such.DEBUG.info('compare version '+updateNow+' last:'+ such.VERSION + ' new:' + such.UPDATES.version);
 					
-					if(force || such.options.onCheckVersion(updateNow))
+					if(force)
 						such.updateVersion();
+					else
+						such.options.onCheckVersion(updateNow);
 				}, function(e){
 					such.errorHandler('open file version' , e);
 				}, function(){
