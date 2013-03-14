@@ -66,8 +66,8 @@ deviceready.push(function(){
 					}
 				});
 			}else{*/
-				MyApp.ready();
-				//return false;
+				MyApp.updateVersion();
+				return false;
 			//}
 		},
 		
