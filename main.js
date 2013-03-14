@@ -1,6 +1,7 @@
 deviceready.push(function(){
 	
 	navigator.splashscreen.hide();
+	document.body.className = 'r' + screen.width + 'x' + screen.height;
 	
 	MyApp = new gapVersion({
 		SERVER: 'http://hml.conheca.me/gapversion/',
@@ -16,7 +17,6 @@ deviceready.push(function(){
 		onReady: function(){
 			MyApp.DEBUG.info('app ready');
 			
-			document.body.className = 'r' + screen.width + 'x' + screen.height;
 			
 			Loader.css(MyApp.FILESYSTEM.fullPath + '/Assets/css/style.css', function(){
 				MyApp.DEBUG.info('style.css include');				
