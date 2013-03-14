@@ -30,7 +30,11 @@ deviceready.push(function(){
 						
 						Loader.js(MyApp.FILESYSTEM.fullPath + '/Assets/js/init.js', function(){
 							MyApp.DEBUG.info('init.js include');
-							navigator.splashscreen.hide();
+							
+							setTimeout(function(){
+								navigator.splashscreen.hide();
+							}, 600);
+							
 						}, function(e){
 							MyApp.errorHandler('init.js include', e);
 						});
