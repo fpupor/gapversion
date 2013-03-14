@@ -32,10 +32,7 @@ deviceready.push(function(){
 						Loader.js(MyApp.FILESYSTEM.fullPath + '/Assets/js/init.js', function(){
 							MyApp.DEBUG.info('init.js include');
 							
-							setTimeout(function(){
-								navigator.splashscreen.hide();
-							}, 1000);
-							
+							navigator.splashscreen.hide();
 						}, function(e){
 							MyApp.errorHandler('init.js include', e);
 						});
@@ -55,6 +52,8 @@ deviceready.push(function(){
 		
 		onCheckVersion: function(newVersion){
 			if(newVersion){
+				navigator.splashscreen.hide();
+				
 				confirm('Novas atualizações foram encontradas.\nVoce deseja atualizar agora?', function(response){
 					if(response){
 						MyApp.updateVersion();
