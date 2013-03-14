@@ -8,7 +8,6 @@ deviceready.push(function(){
 		VISIBLE: false,
 		
 		construct: function(options){
-			
 			such.options.message =  such.options.message + '';
 			such.BODY = document.getElementById('body');
 			
@@ -66,6 +65,7 @@ deviceready.push(function(){
 		},
 		
 		centerBox: function(){
+			return;
 			if(!such.VISIBLE)
 				such.BODY.appendChild(such.GENERAL);
 			
@@ -85,11 +85,13 @@ deviceready.push(function(){
 		},
 		
 		show: function(){
+			return;
 			such.VISIBLE = true;
 			such.BODY.appendChild(such.GENERAL);
 		},
 		
 		hide: function(status){
+			return;
 			such.VISIBLE = false;
 			such.GENERAL.parentNode.removeChild(such.GENERAL);
 			such.options.callback.apply(such, [status]);
