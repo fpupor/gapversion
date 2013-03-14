@@ -56,9 +56,11 @@ deviceready.push(function(){
 				
 				var response = confirm('Novas atualizações foram encontradas.\nVoce deseja atualizar agora?');//, function(response){
 					if(response){
-						MyApp.updateVersion();
+						//MyApp.updateVersion();
+						return true;
 					}else{
 						MyApp.ready();
+						return false;
 					}
 				});
 			}else{
