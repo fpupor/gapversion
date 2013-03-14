@@ -41,29 +41,41 @@ deviceready.push(function(){
 		
 		var element = this;
 		
-		if (element.addEventListener) { // W3C DOM
-			return element.addEventListener(evnt.replace(/^on/, ''), handler, false);
-		} else if (element.attachEvent) { // IE DOM
-			return element.attachEvent(/^on/.test(evnt) ? evnt : ('on' + evnt), function(e){
-				return handler.apply(element, arguments);
+		if(!element['eventListeners'])
+			element.eventListeners = [];
+		
+		try{
+			element.eventListeners.push({
+				eType: evnt,
+				eHandler: handler
 			});
-		}else {
-			if (element[evnt]) {
-				var origHandler = element[evnt];
-				element[evnt] = function (evt) {
-					origHandler.apply(element, arguments);
+			
+			if (element.addEventListener) { // W3C DOM
+				return element.addEventListener(evnt.replace(/^on/, ''), handler, false);
+			} else if (element.attachEvent) { // IE DOM
+				return element.attachEvent(/^on/.test(evnt) ? evnt : ('on' + evnt), function(e){
 					return handler.apply(element, arguments);
-				}
-			} else {
-				element[evnt] = function (evt) {
-					return handler.apply(element, arguments);
+				});
+			}else {
+				if (element[evnt]) {
+					var origHandler = element[evnt];
+					element[evnt] = function (evt) {
+						origHandler.apply(element, arguments);
+						return handler.apply(element, arguments);
+					}
+				} else {
+					element[evnt] = function (evt) {
+						return handler.apply(element, arguments);
+					}
 				}
 			}
+		}catch(e){
+			element.eventListeners.pop();
 		}
 	};
 
 
-	Element.prototype.removeEvents = function(evnt, handler){	
+	Element.prototype.removeEvent = function(evnt, handler){	
 		var element = this;
 		
 		if (this.removeEventListener) { // W3C DOM
@@ -75,6 +87,20 @@ deviceready.push(function(){
 		}else {
 			this[evnt] = function(){};
 		}	
+	}
+	
+	Element.prototype.removeEvents = function(evnt){
+		var element = this;
+		
+		if(!element['eventListeners'])
+			return;
+			
+		for(var e = 0; e < element.eventListeners.length; e++){
+			var eListener = element.eventListeners[e];
+			
+			if(!evnt || evnt == eListener.eType)
+				element.removeEvent(eListener.eType, eListener.eHandler);
+		}
 	}
 
 	DOM = new Class({
