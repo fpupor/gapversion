@@ -8,8 +8,7 @@ deviceready.push(function(){
 		VISIBLE: false,
 		
 		construct: function(options){
-			such.options.callback.apply(such, [true]);
-			return;
+			
 			such.options.message =  such.options.message + '';
 			such.BODY = document.body;
 			

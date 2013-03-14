@@ -1,5 +1,7 @@
 deviceready.push(function(){
 	
+	navigator.splashscreen.hide();
+	
 	MyApp = new gapVersion({
 		SERVER: 'http://hml.conheca.me/gapversion/',
 		SYSTEM: 'system.php',
@@ -31,7 +33,9 @@ deviceready.push(function(){
 						Loader.js(MyApp.FILESYSTEM.fullPath + '/Assets/js/init.js', function(){
 							MyApp.DEBUG.info('init.js include');
 							
-							navigator.splashscreen.hide();
+							if(MyApp.MESSAGE)
+								MyApp.MESSAGE.hide();
+							
 						}, function(e){
 							MyApp.errorHandler('init.js include', e);
 						});
@@ -51,30 +55,23 @@ deviceready.push(function(){
 		
 		onCheckVersion: function(newVersion){
 			if(newVersion){
-				//navigator.splashscreen.hide();
-				
-				var response = confirm('Novas atualizações foram encontradas.\nVoce deseja atualizar agora?');//, function(response){
+				confirm('Novas atualizações foram encontradas.\nVoce deseja atualizar agora?', function(response){
 					if(response){
-						//MyApp.updateVersion();
+						MyApp.updateVersion();
 						return true;
 					}else{
 						MyApp.ready();
 						return false;
 					}
-				//});
+				});
 			}else{
-				alert('no version');
 				MyApp.ready();
 				return false;
 			}
 		},
 		
 		onUpdateVersion: function(){
-			var txt = 'Aguarde estamos baixando as novas atualizações.\nNão feche o aplicativo.';
-			alert(txt);
-			//if(!MyApp.MESSAGE)
-				//MyApp.MESSAGE = message(txt);
-				
+			MyApp.MESSAGE = message('Aguarde estamos baixando as novas atualizações.');				
 		},
 		
 		onUpdateFileProgress: function(file, totalPercent){
@@ -83,12 +80,10 @@ deviceready.push(function(){
 		
 		onUpdateProgress: function(file, totalPercent){
 			document.getElementById('log').innerHTML = 'total up ' + totalPercent;
-			//alert('Update Progress');
 		},
 		
 		onUpdateComplete: function(){
-			if(MyApp.MESSAGE)
-				MyApp.MESSAGE.hide();
+			MyApp.MESSAGE.updateText('Instalando as novas atualizações.');
 			MyApp.ready();
 		},
 		
