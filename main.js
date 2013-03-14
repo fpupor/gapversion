@@ -28,7 +28,7 @@ deviceready.push(function(){
 					MyApp.openFile(fileEntry, function(file){
 						
 						MyApp.DEBUG.info('inner content html');
-						document.getElementById('body').innerHTML = file.target.result;
+						document.getElementById('body').innerHTML = "sadffdsafa"//file.target.result;
 						
 						Loader.js(MyApp.FILESYSTEM.fullPath + '/Assets/js/init.js', function(){
 							MyApp.DEBUG.info('init.js include');
