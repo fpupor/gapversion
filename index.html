@@ -38,6 +38,11 @@
 	
 	*{margin:0; padding:0}
 	
+	html,
+	body{
+		overflow:hidden;
+	}
+	
 	body, #body{
 		position:absolute;
 		position:fixed;
@@ -47,6 +52,31 @@
 		height:960px;
 		background:url(splash/ios/Default_at_2x.png) no-repeat center;
 		overflow:hidden;
+	}
+	
+	body.r320x480{
+		position:absolute;
+		top: -240px;
+		left: -160px;
+		width:640px;
+		height:960px;
+		overflow:hidden;
+		-webkit-transform: scale(0.5, 0.5);
+		-moz-transform: scale(0.5, 0.5);
+		-ms-transform: scale(0.5, 0.5);
+		transform: scale(0.5, 0.5);
+	}
+		body.r320x480 #body{
+			position:absolute;
+			top:0 !important;
+			left:0 !important;
+			width:640px;
+			height:960px;
+			overflow:hidden;
+		}
+
+	body.r640x1136{
+		
 	}
 	
 	#log{
