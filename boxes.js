@@ -5,6 +5,7 @@ deviceready.push(function(){
 		MESSAGE: null,
 		BUTTONS: null,
 		BODY: null,
+		VISIBLE: false,
 		
 		construct: function(options){
 			such.options.message =  such.options.message + '';
@@ -27,7 +28,6 @@ deviceready.push(function(){
 			
 			such.MESSAGE = document.createElement('p');
 			such.MESSAGE.className = 'message';
-			such.MESSAGE.innerHTML = such.options.message.replace(/\n/gim, '<br/>');
 			
 			such.BUTTONS = document.createElement('span');
 			such.BUTTONS.className = 'buttons';
@@ -56,11 +56,17 @@ deviceready.push(function(){
 			such.BOX.appendChild(such.MESSAGE);
 			such.BOX.appendChild(such.BUTTONS);
 			
+			such.updateText(such.options.message);
+		},
+		
+		updateText: function(txt){
+			such.MESSAGE.innerHTML = (txt || '').replace(/\n/gim, '<br/>');
 			such.centerBox();
 		},
 		
 		centerBox: function(){
-			such.BODY.appendChild(such.GENERAL);
+			if(!such.VISIBLE)
+				such.BODY.appendChild(such.GENERAL);
 			
 			var totalHeight = such.GENERAL.offsetHeight;
 			var totalWidth = such.GENERAL.offsetWidth;
@@ -71,15 +77,19 @@ deviceready.push(function(){
 			such.BOX.style.top = ((totalHeight / 2) - (boxHeight / 2)) + 'px';
 			such.BOX.style.left = ((totalWidth / 2) - (boxWidth / 2)) + 'px';
 			
-			such.GENERAL.parentNode.removeChild(such.GENERAL);
-			such.GENERAL.style.visibility = 'visible';
+			if(!such.VISIBLE){
+				such.GENERAL.parentNode.removeChild(such.GENERAL);
+				such.GENERAL.style.visibility = 'visible';
+			}
 		},
 		
 		show: function(){
+			such.VISIBLE = true;
 			such.BODY.appendChild(such.GENERAL);
 		},
 		
 		hide: function(status){
+			such.VISIBLE = false;
 			such.GENERAL.parentNode.removeChild(such.GENERAL);
 			such.options.callback.apply(such, [status]);
 		}
