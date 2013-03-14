@@ -54,7 +54,7 @@ deviceready.push(function(){
 			if(newVersion){
 				//navigator.splashscreen.hide();
 				
-				var response = confirm('Novas atualizações foram encontradas.\nVoce deseja atualizar agora?')//, function(response){
+				var response = confirm('Novas atualizações foram encontradas.\nVoce deseja atualizar agora?');//, function(response){
 					if(response){
 						MyApp.updateVersion();
 					}else{
@@ -62,6 +62,7 @@ deviceready.push(function(){
 					}
 				});
 			}else{
+				alert('no version');
 				MyApp.ready();
 				return false;
 			}
