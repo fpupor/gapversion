@@ -52,9 +52,9 @@ deviceready.push(function(){
 		
 		onCheckVersion: function(newVersion){
 			if(newVersion){
-				navigator.splashscreen.hide();
+				//navigator.splashscreen.hide();
 				
-				confirm('Novas atualizações foram encontradas.\nVoce deseja atualizar agora?', function(response){
+				var response = confirm('Novas atualizações foram encontradas.\nVoce deseja atualizar agora?')//, function(response){
 					if(response){
 						MyApp.updateVersion();
 					}else{
@@ -69,8 +69,9 @@ deviceready.push(function(){
 		
 		onUpdateVersion: function(){
 			var txt = 'Aguarde estamos baixando as novas atualizações.\nNão feche o aplicativo.';
-			if(!MyApp.MESSAGE)
-				MyApp.MESSAGE = message(txt);
+			alert(txt);
+			//if(!MyApp.MESSAGE)
+				//MyApp.MESSAGE = message(txt);
 				
 		},
 		
