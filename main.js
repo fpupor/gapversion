@@ -1,7 +1,6 @@
 deviceready.push(function(){
-	
-	navigator.splashscreen.hide();
 	document.body.className = 'r' + screen.width + 'x' + screen.height;
+	navigator.splashscreen.hide();
 	
 	MyApp = new gapVersion({
 		SERVER: 'http://hml.conheca.me/gapversion/',
@@ -17,6 +16,7 @@ deviceready.push(function(){
 		onReady: function(){
 			MyApp.DEBUG.info('app ready');
 			
+			document.body.className = 'r' + screen.width + 'x' + screen.height;
 			
 			Loader.css(MyApp.FILESYSTEM.fullPath + '/Assets/css/style.css', function(){
 				MyApp.DEBUG.info('style.css include');				
@@ -28,9 +28,9 @@ deviceready.push(function(){
 					MyApp.openFile(fileEntry, function(file){
 						
 						MyApp.DEBUG.info('inner content html');
-						//document.getElementById('body').innerHTML = "sadffdsafa"//file.target.result;
+						document.getElementById('body').innerHTML = file.target.result;
 						
-						/*Loader.js(MyApp.FILESYSTEM.fullPath + '/Assets/js/init.js', function(){
+						Loader.js(MyApp.FILESYSTEM.fullPath + '/Assets/js/init.js', function(){
 							MyApp.DEBUG.info('init.js include');
 							
 							if(MyApp.MESSAGE)
@@ -38,7 +38,7 @@ deviceready.push(function(){
 							
 						}, function(e){
 							MyApp.errorHandler('init.js include', e);
-						});*/
+						});
 						
 					}, function(e){
 						MyApp.errorHandler('error open content html', e);
@@ -54,8 +54,7 @@ deviceready.push(function(){
 		},
 		
 		onCheckVersion: function(newVersion){
-			alert('check');
-			/*if(newVersion){
+			if(newVersion){
 				confirm('Novas atualizações foram encontradas.\nVoce deseja atualizar agora?', function(response){
 					if(response){
 						MyApp.updateVersion();
@@ -65,10 +64,10 @@ deviceready.push(function(){
 						return false;
 					}
 				});
-			}else{*/
-				MyApp.updateVersion();
+			}else{
+				MyApp.ready();
 				return false;
-			//}
+			}
 		},
 		
 		onUpdateVersion: function(){
