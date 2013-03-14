@@ -55,7 +55,7 @@ deviceready.push(function(){
 		
 		onCheckVersion: function(newVersion){
 			alert('check');
-			if(newVersion){
+			/*if(newVersion){
 				confirm('Novas atualizações foram encontradas.\nVoce deseja atualizar agora?', function(response){
 					if(response){
 						MyApp.updateVersion();
@@ -65,10 +65,10 @@ deviceready.push(function(){
 						return false;
 					}
 				});
-			}else{
+			}else{*/
 				MyApp.ready();
-				return false;
-			}
+				//return false;
+			//}
 		},
 		
 		onUpdateVersion: function(){
