@@ -54,6 +54,7 @@ deviceready.push(function(){
 		},
 		
 		onCheckVersion: function(newVersion){
+			alert('check');
 			if(newVersion){
 				confirm('Novas atualizações foram encontradas.\nVoce deseja atualizar agora?', function(response){
 					if(response){
