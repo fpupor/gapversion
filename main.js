@@ -56,7 +56,7 @@ deviceready.push(function(){
 			if(newVersion){
 				navigator.splashscreen.hide();
 				
-				if(such.VERSION && such.VERSION > 0){
+				if(MyApp.VERSION && MyApp.VERSION > 0){
 					confirm('Novas atualizações foram encontradas.\nVoce deseja atualizar agora?', function(response){
 						if(response){
 							MyApp.updateVersion();
