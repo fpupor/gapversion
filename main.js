@@ -56,13 +56,17 @@ deviceready.push(function(){
 			if(newVersion){
 				navigator.splashscreen.hide();
 				
-				confirm('Novas atualizações foram encontradas.\nVoce deseja atualizar agora?', function(response){
-					if(response){
-						MyApp.updateVersion();
-					}else{
-						MyApp.ready();
-					}
-				});
+				if(such.VERSION && such.VERSION > 0){
+					confirm('Novas atualizações foram encontradas.\nVoce deseja atualizar agora?', function(response){
+						if(response){
+							MyApp.updateVersion();
+						}else{
+							MyApp.ready();
+						}
+					});
+				}else{
+					MyApp.updateVersion();
+				}
 			}else{
 				MyApp.ready();
 				return false;
