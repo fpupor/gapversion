@@ -278,6 +278,8 @@
 			if(!such.ONLINE){
 				if(such.VERSION && such.VERSION > 0)
 					setTimeout(such.ready, 500);
+				else
+					such.options.onUpdateError('offline');
 					
 				return such.DEBUG.info('offline to check version') && false;
 			}

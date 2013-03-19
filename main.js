@@ -74,7 +74,7 @@ deviceready.push(function(){
 		},
 		
 		onUpdateFileProgress: function(file, totalPercent){
-			MyApp.MESSAGE.updateText('Baixando novas arquivos...');
+			MyApp.MESSAGE.updateText('Baixando novos arquivos...');
 		},
 		
 		onUpdateProgress: function(file, totalPercent){
@@ -91,9 +91,13 @@ deviceready.push(function(){
 		},
 		
 		onUpdateError: function(ers){
-			alert('Não foi possivel concluir as atualizações\nTente novamente mais tarde.', function(){
-				MyApp.ready();
-			});
+			if(ers && ers == 'offline'){
+				MyApp.MESSAGE = message('Está é a primeira vez que o aplicativo vai ser utilizado, é necessário conectar na internet para fazer a primeira atualização.\nFeche e abra o aplicativo novamente apos conectar.');
+			}else{
+				alert('Não foi possivel concluir as atualizações\nTente novamente mais tarde.', function(){
+					MyApp.ready();
+				});
+			}
 		},
 		
 		onErrorHandler: function(e){
