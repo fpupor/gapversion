@@ -313,6 +313,7 @@
 					
 				});
 			}, function(e){
+				such.options.onUpdateError(e);
 				such.errorHandler('download file version' , e);
 			})
 		},
