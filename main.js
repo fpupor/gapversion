@@ -78,11 +78,11 @@ deviceready.push(function(){
 		},
 		
 		onUpdateCompareProgress: function(id, atual, ultimo){
-			MyApp.MESSAGE = message('Comparando arquivos ' + atual + '/' + ultimo + '...');		
+			MyApp.MESSAGE.updateText('Comparando arquivos ' + atual + '/' + ultimo + '...');		
 		},
 		
 		onUpdateStart: function(){
-			MyApp.MESSAGE = message('Iniciando atualização...');				
+			MyApp.MESSAGE.updateText('Iniciando atualização...');				
 		},
 		
 		onUpdateFileProgress: function(file, totalPercent){
