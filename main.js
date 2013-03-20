@@ -57,13 +57,13 @@ deviceready.push(function(){
 				navigator.splashscreen.hide();
 				
 				if(MyApp.VERSION && MyApp.VERSION > 0){
-					confirm('Novas atualizações foram encontradas.\nVoce deseja atualizar agora?', function(response){
+					confirm('Novas atualizações foram encontradas.\nDeseja atualizar agora?', function(response){
 						if(response){
 							MyApp.updateVersion();
 						}else{
 							MyApp.ready();
 						}
-					});
+					}, 'Sim', 'Não');
 				}else{
 					MyApp.updateVersion();
 				}
@@ -77,12 +77,20 @@ deviceready.push(function(){
 			MyApp.MESSAGE = message('Aguardando servidor...');				
 		},
 		
-		onUpdateFileProgress: function(file, totalPercent){
-			MyApp.MESSAGE.updateText('Baixando novos arquivos...');
+		onUpdateCompareProgress: function(id, atual, ultimo){
+			MyApp.MESSAGE = message('Comparando arquivos ' + atual + '/' + ultimo + '...');		
 		},
 		
-		onUpdateProgress: function(file, totalPercent){
-			MyApp.MESSAGE.updateText('Verificando arquivos desatualizados...');
+		onUpdateStart: function(){
+			MyApp.MESSAGE = message('Iniciando atualização...');				
+		},
+		
+		onUpdateFileProgress: function(file, totalPercent){
+			MyApp.MESSAGE.updateText('Baixando arquivo "' + file.name + '"...');
+		},
+		
+		onUpdateProgress: function(file, atual, ultimo){
+			MyApp.MESSAGE.updateText('Atualizando arquivos ' + atual + '/' + ultimo + '...');
 		},
 		
 		onUpdateComplete: function(){
@@ -91,16 +99,18 @@ deviceready.push(function(){
 			
 			alert('As atualizações foram concluidas com sucesso!', function(){
 				MyApp.ready();
-			});
+			}, 'Brincar');
 		},
 		
 		onUpdateError: function(ers){
 			if(ers && ers == 'offline'){
-				MyApp.MESSAGE = message('Está é a primeira vez que o aplicativo vai ser utilizado, é necessário conectar na internet para fazer a primeira atualização.\nFeche e abra o aplicativo novamente apos conectar.');
+				alert('Este é seu primeiro acesso ao aplicativo.\nPara fazer a primeira atualização é necessário estar conectado à internet.', function(){
+					MyApp.checkVersion();
+				}, 'Tentar novamente');
 			}else{
 				alert('Não foi possivel concluir as atualizações\nTente novamente mais tarde.', function(){
 					MyApp.ready();
-				});
+				}, 'Brincar');
 			}
 		},
 		

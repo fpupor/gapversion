@@ -81,7 +81,7 @@
 			such.LIST[id].complete = true;
 			such.COMPLETES[id] = true;
 
-			return such.options.onComplete.apply(such, [id]);
+			return such.options.onComplete.apply(such, [id, such.COMPLETES.length, such.LIST.length ]);
 		},
 
 		hasLastComplete: function () {

@@ -172,6 +172,7 @@
 			
 			var getFilesChain = new Chain({
 				onFinish: such.updateStart,
+				onComplete: such.updateCompareProgress,
 				async: true
 			});
 			
@@ -233,6 +234,7 @@
 		},
 		
 		updateStart: function(){
+			such.options.onUpdateStart();
 			such.DEBUG.info('chain update run ' + such.UPDATES.chain.LIST.length);
 			such.UPDATES.chain.run();
 		},
@@ -261,8 +263,12 @@
 			such.options.onUpdateFileProgress(fileEntry, percent);
 		},
 		
-		updateProgress: function(id){
-			such.options.onUpdateProgress(id, (such.UPDATES.chain.LIST.length / such.UPDATES.chain.COMPLETES.length) * 100);
+		updateCompareProgress: function(id, completes, total){
+			such.options.onUpdateCompareProgress(id, completes, total);
+		},
+		
+		updateProgress: function(id, completes, total){
+			such.options.onUpdateProgress(id, completes, total);
 		},
 		
 		updateComplete: function(id){
@@ -366,7 +372,9 @@
 			onReady: function(){},
 			onCheckVersion: function(){},
 			onUpdateVersion: function(){},
+			onUpdateCompareProgress: function(){},
 			onUpdateFileProgress: function(){},
+			onUpdateStart: function(){},
 			onUpdateProgress: function(){},
 			onUpdateComplete: function(){},
 			onUpdateError: function(){},

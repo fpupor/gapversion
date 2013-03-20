@@ -2,7 +2,7 @@
 <widget xmlns = "http://www.w3.org/ns/widgets"
 	xmlns:gap= "http://phonegap.com/ns/1.0"
 	id= "S4ENTR4YMZ.br.com.wunderman.danone.monsapp"
-	version= "0.0.7">
+	version= "0.0.8">
 
 	<name>Moms App</name> 
 
@@ -26,6 +26,7 @@
 	<preference name="webviewbounce" value="false" />
 	<preference name="disable-cursor" value="true" />
 	<preference name="auto-hide-splash-screen" value="false" />
+	<preference name="detect-data-types" value="false" />
 	
 	
 	<gap:splash src="splash/ios/Default.png" width="320" height="480" />
