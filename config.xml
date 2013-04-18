@@ -14,11 +14,6 @@
 			email="fpupor@gmail.com">
 	</author>
 	
-	<gap:plugin name="ChildBrowser" version="~4.0" />
-	<gap:plugin name="FacebookConnect">
-   		<param name="APP_ID" value="123456" />
- 	</gap:plugin>
-	
 	<gap:platforms>
 		<gap:platform name="android" minVersion="2.1" />
 		<gap:platform name="ios"/>
