@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns = "http://www.w3.org/ns/widgets"
 	xmlns:gap= "http://phonegap.com/ns/1.0"
-	id= "br.com.wunderman.danone.monsapp"
-	version= "0.0.8">
+	id= "S4ENTR4YMZ.br.com.wunderman.danone.monsapp"
+	version= "0.0.9">
 
 	<name>Moms App</name> 
 
@@ -19,7 +19,7 @@
 		<gap:platform name="ios"/>
 	</gap:platforms>
 
-	<preference name="phonegap-version" value="2.3.0" />
+	<preference name="phonegap-version" value="2.5.0" />
 	<preference name="target-device" value="handset" />
 	<preference name="orientation" value="portrait" />
 	<preference name="fullscreen" value="true" />
@@ -27,10 +27,8 @@
 	<preference name="disable-cursor" value="true" />
 	<preference name="auto-hide-splash-screen" value="false" />
 	<preference name="detect-data-types" value="false" />
+	<preference name="stay-in-webview" value="false" />
 	
-	<icon src="img/icon57.png" width="57" height="57" gap:platform="webos" />
-	<icon src="img/icon72.png" gap:platform="ios" width="72" height="72" gap:platform="webos" />
-	<icon src="img/icon114.png" width="114" height="114" gap:platform="webos" />
 	
 	<gap:splash src="splash/ios/Default.png" width="320" height="480" />
 	<gap:splash src="splash/ios/Default_at_2x.png" width="640" height="960" />
